@@ -1,0 +1,107 @@
+@font-face {
+  font-family: "SofiaProBoldItalic";
+  src: url("../public/fonts/Sofia-Pro-Bold-Italic.otf");
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+}
+@font-face {
+  font-family: "SofiaProBold";
+  src: url("../public/fonts/Sofia-Pro-Bold.otf");
+  font-style: medium;
+  font-weight: 500;
+  font-display: swap;
+}
+@font-face {
+  font-family: "SofiaProLightItalic";
+  src: url("../public/fonts/Sofia-Pro-Light-Italic.otf");
+  font-style: medium;
+  font-weight: 500;
+  font-display: swap;
+}
+@font-face {
+  font-family: "SofiaProLight";
+  src: url("../public/fonts/Sofia-Pro-Light.otf");
+  font-style: medium;
+  font-weight: 500;
+  font-display: swap;
+}
+@font-face {
+  font-family: "SofiaProMediumItalic";
+  src: url("../public/fonts/Sofia-Pro-Medium-Italic.otf");
+  font-style: medium;
+  font-weight: 500;
+  font-display: swap;
+}
+@font-face {
+  font-family: "SofiaProMedium";
+  src: url("../public/fonts/Sofia-Pro-Medium.otf");
+  font-style: medium;
+  font-weight: 500;
+  font-display: swap;
+}
+@font-face {
+  font-family: "SofiaProRegularItalic";
+  src: url("../public/fonts/Sofia-Pro-Regular-Italic.otf");
+  font-style: medium;
+  font-weight: 500;
+  font-display: swap;
+}
+@font-face {
+  font-family: "SofiaProRegular";
+  src: url("../public/fonts/Sofia-Pro-Regular.otf");
+  font-style: medium;
+  font-weight: 500;
+  font-display: swap;
+}
+@font-face {
+  font-family: "SofiaProSemiBold";
+  src: url("../public/fonts/Sofia-Pro-Semi-Bold.otf");
+  font-style: medium;
+  font-weight: 500;
+  font-display: swap;
+}
+@font-face {
+  font-family: "PhilosopherBold";
+  src: url("../public/fonts/Philosopher-Bold.ttf");
+  font-style: medium;
+  font-weight: 500;
+  font-display: swap;
+}
+@font-face {
+  font-family: "PhilosopherRegular";
+  src: url("../public/fonts/Philosopher-Regular.ttf");
+  font-style: medium;
+  font-weight: 500;
+  font-display: swap;
+}
+
+html,
+body {
+  padding: 0;
+  margin: 0;
+  font-family: SofiaProRegular;
+}
+::-webkit-scrollbar {
+  display: none;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+p {
+  margin: 0;
+  margin-bottom: 1.2rem;
+  line-height: 1.3rem;
+}
+
+h1, h2, h3, h4, h5 {
+  margin: 0;
+  margin-bottom: 1.2rem;
+}
+
+* {
+  box-sizing: border-box;
+}
