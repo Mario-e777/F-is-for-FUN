@@ -16,6 +16,7 @@ import Paginator from '../components/paginator'
 /* Utils */
 import { COLORS, SHADOWS, TRANSITIONS } from '../utils/colors'
 import getWeb3 from '../scripts/getWeb3'
+import Button from '../components/button'
 
 /* Styled components */
 const HomeContainer = styled.section`
@@ -63,20 +64,26 @@ const HomeContainer = styled.section`
     }
   }
 
-  & .head-container {
-    height: 100%;
-    width: 100%;
-    display: grid;
-    grid-template-columns: 0.8fr 1fr 0.8fr;
+  & .top-container {
+    width: 100vw;
+    display: flex;
+    justify-content: center;
 
-    & .currency-total {
-      justify-self: center;
-      align-items: center;
-      padding-top: 1.5rem;
-      height: fit-content;
-      font-size: 1.25rem;
-      color: ${COLORS.black};
-      font-family: SofiaProMedium;
+    & .head-container {
+      height: 100%;
+      width: calc(100vw - 1.5rem);
+      display: grid;
+      grid-template-columns: 1fr minmax(29rem, 1fr) 1fr;
+
+      & .currency-total {
+        justify-self: center;
+        align-items: center;
+        padding-top: 1.5rem;
+        height: fit-content;
+        font-size: 1.25rem;
+        color: ${COLORS.black};
+        font-family: SofiaProMedium;
+      }
     }
   }
 
@@ -94,17 +101,10 @@ const HomeContainer = styled.section`
 
 const TitleContainer = styled.div`
   grid-column: 2/3;
-  height: 100%;
-  width: 100%;
+
   display: flex;
   align-items: center;
   justify-content: flex-start;
-  /* background: linear-gradient(118deg, rgba(255, 255, 255, 0.396) 0%, rgba(255, 255, 255, 0.44) 100%) 0% 0% no-repeat padding-box padding-box transparent;
-  backdrop-filter: blur(40px);
-  box-shadow: ${SHADOWS.medium}; */
-  /* border-bottom: 1px solid ${COLORS.black}; */
-  /* position: sticky;
-  top: 0; */
   padding: 0 1.5rem 1.5rem 1.5rem;
   z-index: +1;
   flex-direction: column;
@@ -140,32 +140,6 @@ const TitleContainer = styled.div`
     gap: 1.5rem;
     flex-wrap: wrap;
     justify-content: center;
-
-    & .green {
-      background-color: ${COLORS.green_light};
-    }
-    & .blue {
-      background-color: ${COLORS.blue_light};
-    }
-
-    &> a {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 1.1rem 1.3rem;
-      color: ${COLORS.black};
-      border: 1px solid ${COLORS.black};
-      border-radius: 3px;
-      font-size: 1.1rem;
-      transition-duration: ${TRANSITIONS.normal};
-      white-space: nowrap;
-      box-shadow: ${SHADOWS.small};
-      font-family: SofiaProMedium;
-
-      &:hover {
-        box-shadow: ${SHADOWS.medium};
-      }
-    }
   }
 `
 
@@ -216,19 +190,21 @@ export default function Home() {
     <Layout title={'Home'} >
       <HomeContainer>
 
-        <div className='head-container'>
-          <div className='currency-total eth' >0.00 ETH</div>
-          <TitleContainer>
-            <span className='input-container' >
-              <span>🔎</span>
-              <input type='text' placeholder='Search fundraiser' />
-            </span>
-            <div>
-              <Link href='fundraiser/new'><a className="green">Create fundraiser</a></Link>
-              <Link href='fundraiser/new'><a className="blue">Get & yield FUN</a></Link>
-            </div>
-          </TitleContainer>
-          <div className='currency-total fun' >{state.funTotal} FUN</div>
+        <div className='top-container'>
+          <div className='head-container'>
+            <div className='currency-total eth' >0.00 ETH</div>
+            <TitleContainer>
+              <span className='input-container' >
+                <span>🔎</span>
+                <input type='text' placeholder='Search fundraiser' />
+              </span>
+              <div>
+                <Button href='fundraiser/new' link color='green' >Create fundraiser</Button>
+                <Button href='fundraiser/new' link color='blue' >Get & yield FUN</Button>
+              </div>
+            </TitleContainer>
+            <div className='currency-total fun' >{state.funTotal} FUN</div>
+          </div>
         </div>
 
         <Paginator />

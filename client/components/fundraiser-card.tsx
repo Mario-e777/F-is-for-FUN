@@ -3,9 +3,7 @@ import getWeb3 from '../scripts/getWeb3'
 import FundraiserContract from '../contracts/Fundraiser.json'
 import styled from 'styled-components'
 import { COLORS, SHADOWS, TRANSITIONS } from "../utils/colors"
-import Image from "next/image"
-import IMAGE from '../public/images/box.png'
-import Link from "next/link"
+import Button from "./button"
 
 const FundraiserCardContainer = styled.article`
   background-color: ${COLORS.background_gray};
@@ -15,11 +13,16 @@ const FundraiserCardContainer = styled.article`
   box-shadow: ${SHADOWS.small};
   transition-duration: ${TRANSITIONS.normal};
   font-size: 1.1rem;
+  display: grid;
+  grid-template-rows: 17rem 1fr;
   
   & .card-info-container {
     padding: 1.5rem;
-    gap: 1.5rem;
+    /* gap: 1.5rem; */
     flex-wrap: wrap;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 
     & p {
       display: -webkit-box;
@@ -31,44 +34,21 @@ const FundraiserCardContainer = styled.article`
         font-family: SofiaProMedium;
       }
     }
-
-    & .green {
-      background-color: ${COLORS.green_light};
-    }
-    & .blue {
-      background-color: ${COLORS.blue_light};
-    }
-    & .yellow {
-      background-color: ${COLORS.yellow_light};
-    }
-
-    &> a {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 1.1rem 1.3rem;
-      color: ${COLORS.black};
-      border: 1px solid ${COLORS.black};
-      border-radius: 3px;
-      font-size: 1.1rem;
-      transition-duration: ${TRANSITIONS.normal};
-      white-space: nowrap;
-      box-shadow: ${SHADOWS.small};
-      font-family: SofiaProMedium;
-
-      &:hover {
-        box-shadow: ${SHADOWS.medium};
-      }
-    }
   }
 
-  & span {
+  & .image-container {
     max-height: 17.5rem;
     width: 100%;
+    height: 100%;
     display: block !important;
     box-shadow: ${SHADOWS.small};
+    overflow: hidden;
+
     & img {
+      border-radius: 5px 5px 0 0;
       object-fit: cover;
+      height: 100%;
+      width: 100%;
     }
   }
 `
@@ -85,7 +65,7 @@ export default function FundraiserCard({ fundraiser }) {
     url: null,
   })
 
-  const init = async (fundraiser) => {
+  const getFundraiserData = async (fundraiser) => {
     try {
       const web3 = await getWeb3()
       const accounts = await web3.eth.getAccounts()
@@ -120,19 +100,29 @@ export default function FundraiserCard({ fundraiser }) {
   }
 
   useEffect(() => {
-    init(fundraiser)
+    getFundraiserData(fundraiser)
   }, []);
 
   return (
     <FundraiserCardContainer>
-      <span>
-        <Image src={IMAGE} alt='' />
+      <span className="image-container" >
+        {/* <Image 
+          alt="The guitarist in the concert."
+          src="https://www.latercera.com/resizer/5MhYjIcc_2tQNdijw9c2EKHH3yk=/900x600/smart/cloudfront-us-east-1.images.arcpublishing.com/copesa/HNDWVAYQCFHXTAE4AUQ3ZNUKIU.jpg"
+          layout="responsive"
+        /> */}
+
+        <img src={state.imageURL} alt='' />
       </span>
       <div className="card-info-container" >
-        <h2>{state.name}</h2>
-        <p>{state.description}; Lorem ipsum dolor sit amet consectetur adipiscing, elit condimentum hac pharetra aliquet, habitasse euismod blandit donec montes. Egestas eget feugiat ligula neque diam torquent, dignissim tellus praesent ridiculus congue nullam urna, gravida dis per metus magna.</p>
-        <p><span>Total donations:<br />$173.43 USD → 0.000134 FUN ✨</span></p>
-        <Link href='fundraiser/new' ><a className="yellow">View more</a></Link>
+        <div>
+          <h2>{state.name}</h2>
+          <p>{state.description}</p>
+        </div>
+        <div>
+          <p><span>Total donations:<br />$173.43 USD → 0.000134 FUN ✨</span></p>
+          <Button color="yellow" href='fundraiser/new' link>View more</Button>
+        </div>
       </div>
     </FundraiserCardContainer>
   )

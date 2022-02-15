@@ -13,6 +13,7 @@ import FactoryContract from '../../contracts/Factory.json'
 import { COLORS, SHADOWS } from '../../utils/colors'
 import { TRANSITIONS } from '../../utils/colors'
 import getWeb3 from '../../scripts/getWeb3'
+import Button from '../../components/button'
 
 const NewFundraiserContainer = styled.section`
   display: flex;
@@ -95,12 +96,6 @@ export default function New() {
   /* Functions */
   const createNewFundraiser = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log(ContractName.current.value)
-    console.log(ContractWebsite.current.value)
-    console.log(ContractDescription.current.value)
-    console.log(ContractImage.current.value)
-    console.log(ContractBeneficiary.current.value)
-    console.log(ContractOwner.current.value)
     await state.contract.methods.createFundraiser(
       ContractName.current.value,
       ContractWebsite.current.value,
@@ -137,32 +132,31 @@ export default function New() {
         <h2>Create fundraiser</h2>
         <form onSubmit={e => createNewFundraiser(e)} >
           <label>
-            <p>Name</p>
-            <input ref={ContractName} placeholder="Fundraiser Name" type='text' />
+            <p>Fundraise's name</p>
+            <input ref={ContractName} placeholder="Fundraiser Name" type='text' required />
           </label>
           <label>
             <p>Website</p>
-            <input ref={ContractWebsite} placeholder="Fundraiser Website" type='text' />
+            <input ref={ContractWebsite} placeholder="Fundraiser Website" type='text' required />
           </label>
           <label>
             <p>Description</p>
-            <input ref={ContractDescription} placeholder="Fundraiser Description" type='text' />
+            <input ref={ContractDescription} placeholder="Fundraiser Description" type='text' required />
           </label>
           <label>
             <p>Image url</p>
-            <input ref={ContractImage} placeholder="Fundraiser Image" type='text' />
+            <input ref={ContractImage} placeholder="Fundraiser Image" type='text' required />
           </label>
           <label>
             <p>Beneficiary address</p>
-            <input ref={ContractBeneficiary} placeholder="Fundraiser Ethereum Address" type='text' />
+            <input ref={ContractBeneficiary} placeholder="Fundraiser Ethereum Address" type='text' required />
           </label>
           <label>
             <p>Owner address</p>
-            <input ref={ContractOwner} placeholder="Fundraiser owner" type='text' />
+            <input ref={ContractOwner} placeholder="Fundraiser owner" type='text' required />
           </label>
-          <Link href='/'><a className="red">Cancel</a></Link>
-          {/* <Link href='/'><a className="green">Create fundraiser</a></Link> */}
-          <button type='submit' >Create</button>
+          <Button href='/' link color='red' >Cancel</Button>
+          <Button type='submit' color='green' >Create fundraiser</Button>
         </form>
       </NewFundraiserContainer>
     </Layout>

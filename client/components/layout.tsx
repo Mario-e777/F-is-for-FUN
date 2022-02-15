@@ -6,8 +6,9 @@ const LayoutContainer = styled.div`
   background-color: #fad0c4;
   background-image: linear-gradient(315deg, #fad0c4 0%, #f1a7f1 74%);
   min-height: 100vh;
-  height: fit-content;
+  height: 100vh;
   width: 100vw;
+  overflow: scroll;
 
   & main {
     & h1 {
