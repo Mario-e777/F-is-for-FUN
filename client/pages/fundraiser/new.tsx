@@ -19,10 +19,11 @@ const NewFundraiserContainer = styled.section`
   display: flex;
   flex-direction: column;
   align-items: center;
+  padding-bottom: 1.5rem;
 
   & form {
     width: 100%;
-    max-width: 34rem;
+    max-width: 35rem;
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: 1.5rem;
@@ -33,14 +34,19 @@ const NewFundraiserContainer = styled.section`
       & p {
         margin-bottom: 0.4rem;
         color: ${COLORS.black};
+
+        & span {
+          font-size: 0.9rem;
+        }
       }
       
-      & input {
+      & input, textarea {
         width: 100%;
         font-size: 1.02rem;
         padding: 1rem 1.1rem;
         border-radius: 5px;
         border: 1px solid ${COLORS.black};
+        font-family: SofiaProRegular;
       }
     }
 
@@ -70,6 +76,19 @@ const NewFundraiserContainer = styled.section`
 
       &:hover {
         box-shadow: ${SHADOWS.medium};
+      }
+    }
+
+    & .full-grid {
+      grid-column: 1/3;
+    }
+
+    & .description-container {
+      grid-column: 1/3;
+
+      & textarea {
+        height: 11rem;
+        resize: none;
       }
     }
   }
@@ -132,28 +151,28 @@ export default function New() {
         <h2>Create fundraiser</h2>
         <form onSubmit={e => createNewFundraiser(e)} >
           <label>
-            <p>Fundraise's name</p>
-            <input ref={ContractName} placeholder="Fundraiser Name" type='text' required />
+            <p>Fundraiser`s name <span>*</span></p>
+            <input ref={ContractName} placeholder="The Bacon Pancake Fundraiser" type='text' required />
           </label>
           <label>
-            <p>Website</p>
-            <input ref={ContractWebsite} placeholder="Fundraiser Website" type='text' required />
+            <p>Website <span>*</span></p>
+            <input ref={ContractWebsite} placeholder="https://mysite.com" type='text' required />
           </label>
-          <label>
-            <p>Description</p>
-            <input ref={ContractDescription} placeholder="Fundraiser Description" type='text' required />
+          <label className='full-grid' >
+            <p>Image url <span>*</span></p>
+            <input ref={ContractImage} placeholder="https://mysite.com/image.png" type='text' required />
           </label>
-          <label>
-            <p>Image url</p>
-            <input ref={ContractImage} placeholder="Fundraiser Image" type='text' required />
+          <label className='full-grid' >
+            <p>Beneficiary Address <span>*</span></p>
+            <input ref={ContractBeneficiary} placeholder="0x0000000.." type='text' required />
           </label>
-          <label>
-            <p>Beneficiary address</p>
-            <input ref={ContractBeneficiary} placeholder="Fundraiser Ethereum Address" type='text' required />
+          <label className='full-grid' >
+            <p>Owner address <span>*</span></p>
+            <input ref={ContractOwner} placeholder="0x0000000.." type='text' required />
           </label>
-          <label>
-            <p>Owner address</p>
-            <input ref={ContractOwner} placeholder="Fundraiser owner" type='text' required />
+          <label className='description-container' >
+            <p>Description <span>*</span></p>
+            <textarea ref={ContractDescription} placeholder="Fundraising to buy much more bacon and prepare with pancakes :p" required />
           </label>
           <Button href='/' link color='red' >Cancel</Button>
           <Button type='submit' color='green' >Create fundraiser</Button>
