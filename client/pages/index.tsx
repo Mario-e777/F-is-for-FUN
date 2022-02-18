@@ -68,10 +68,10 @@ const HomeContainer = styled.section`
     width: 100vw;
     display: flex;
     justify-content: center;
+    width: calc(100vw - 1.5rem);
 
     & .head-container {
       height: 100%;
-      width: calc(100vw - 1.5rem);
       display: grid;
       grid-template-columns: 1fr minmax(29rem, 1fr) 1fr;
 
