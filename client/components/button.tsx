@@ -6,9 +6,9 @@ import Link from 'next/link'
 import styled from 'styled-components'
 
 /* Utils */
-import { SHADOWS } from '../utils/colors'
-import { TRANSITIONS } from '../utils/colors'
-import { COLORS } from '../utils/colors'
+import { SHADOWS } from '../utils/styles_constants'
+import { TRANSITIONS } from '../utils/styles_constants'
+import { COLORS } from '../utils/styles_constants'
 
 const ButtonContainer = styled.span`
   /* height: fit-content; */

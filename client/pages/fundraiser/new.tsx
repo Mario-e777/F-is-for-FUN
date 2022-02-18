@@ -1,7 +1,6 @@
 /* React stuff */
 import { useState, useEffect, FormEvent, useRef } from 'react'
 import styled from 'styled-components'
-import Link from 'next/link'
 
 /* Components */
 import Layout from "../../components/layout"
@@ -10,9 +9,9 @@ import Layout from "../../components/layout"
 import FactoryContract from '../../contracts/Factory.json'
 
 /* Utils */
-import { COLORS, SHADOWS } from '../../utils/colors'
-import { TRANSITIONS } from '../../utils/colors'
-import getWeb3 from '../../scripts/getWeb3'
+import { COLORS, SHADOWS } from '../../utils/styles_constants'
+import { TRANSITIONS } from '../../utils/styles_constants'
+import { getWeb3 }  from '../../utils/scripts'
 import Button from '../../components/button'
 
 const NewFundraiserContainer = styled.section`
