@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react"
-import getWeb3 from '../scripts/getWeb3'
+import { getWeb3 }  from '../utils/scripts'
 import FundraiserContract from '../contracts/Fundraiser.json'
 import styled from 'styled-components'
-import { COLORS, SHADOWS, TRANSITIONS } from "../utils/colors"
+import { COLORS, SHADOWS, TRANSITIONS } from "../utils/styles_constants"
 import Button from "./button"
 
 const FundraiserCardContainer = styled.article`

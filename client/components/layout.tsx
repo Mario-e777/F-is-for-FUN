@@ -1,6 +1,6 @@
 import Head from 'next/head'
 import styled from 'styled-components'
-import { COLORS } from '../utils/colors';
+import { COLORS } from '../utils/styles_constants';
 
 const LayoutContainer = styled.div`
   background-color: #fad0c4;

@@ -2,7 +2,7 @@
 import { useEffect, useState } from 'react';
 
 /* Utils */
-import getWeb3 from '../scripts/getWeb3';
+import { getWeb3 }  from '../utils/scripts';
 
 /* Contracts */
 import SimpleStorageContract from "../contracts/SimpleStorage.json";
@@ -24,18 +24,12 @@ function MyApp({ Component, pageProps }) {
       const accounts = await web3.eth.getAccounts();
       const networkId = await web3.eth.net.getId(); // Get the contract instance.
 
-      console.log(accounts)
-      console.log(networkId)
-
       // Get the contract instance.
       const deployedNetwork = SimpleStorageContract.networks[networkId];
       const StorageContract = new web3.eth.Contract(
         SimpleStorageContract.abi,
         deployedNetwork && deployedNetwork.address,
       );
-
-        console.log(deployedNetwork)
-        console.log(StorageContract)
 
       setState({ web3, accounts, contract: StorageContract });
     } catch (error) {

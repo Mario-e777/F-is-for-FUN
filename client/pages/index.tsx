@@ -1,12 +1,8 @@
 /* React & next stuff */
 import { useState, useEffect } from 'react'
-import Link from "next/link"
 
 /* Modules */
 import styled from 'styled-components'
-
-/* Contracts */
-import FactoryContract from '../contracts/Factory.json'
 
 /* Components */
 import Layout from '../components/layout'
@@ -14,9 +10,11 @@ import FundraiserCard from '../components/fundraiser-card'
 import Paginator from '../components/paginator'
 
 /* Utils */
-import { COLORS, SHADOWS, TRANSITIONS } from '../utils/colors'
-import getWeb3 from '../scripts/getWeb3'
+import { COLORS, SHADOWS, TRANSITIONS } from '../utils/styles_constants'
 import Button from '../components/button'
+
+/* Contracts services */
+import { getFundraisers } from '../services/fundraisers'
 
 /* Styled components */
 const HomeContainer = styled.section`
@@ -101,21 +99,20 @@ const HomeContainer = styled.section`
 
 const TitleContainer = styled.div`
   grid-column: 2/3;
-
   display: flex;
   align-items: center;
   justify-content: flex-start;
   padding: 0 1.5rem 1.5rem 1.5rem;
   z-index: +1;
   flex-direction: column;
-  
+
   & .input-container {
     position: relative;
     max-width: 24rem;
     width: 100%;
     display: flex;
     align-items: center;
-    
+
     & span {
       position: absolute;
       right: 1.4rem;
@@ -133,7 +130,7 @@ const TitleContainer = styled.div`
     font-size: 1.04rem;
     background-color: ${COLORS.background_gray};
   }
-  
+
   & div {
     margin-top: 1rem;
     display: flex;
@@ -151,39 +148,20 @@ export default function Home() {
     funTotal: null
   })
 
-  /* Functions */
-  const getFundraisers = async ({ getBy, offset }: { getBy: number, offset: number }) => {
-    try {
-      const web3 = await getWeb3()
-      const networkId = await web3.eth.net.getId()
-      const accounts = await web3.eth.getAccounts()
-      const funTotal = parseFloat(web3.utils.fromWei(await web3.eth.getBalance(accounts[0]), 'Ether')).toFixed(2)
-      const deployedNetwork = FactoryContract.networks[networkId]
-      const instance = new web3.eth.Contract(
-        FactoryContract.abi,
-        deployedNetwork && deployedNetwork.address,
-      )
-
-      const fundraisers = await instance.methods.fundraisers(getBy, offset).call()
-      setState({ ...state, contract: instance, accounts, fundraisers, funTotal })
-    }
-    catch (error) {
-      alert('Failed to load web3, accounts, or contract. Check console for details.')
-      console.error(error)
-    }
-  }
-
   const FundraisersCards = () => {
-    return state.accounts.length > 0 && state.fundraisers.map((fundraiser) => {
-      return (
+    return state.accounts.length > 0 
+      && state.fundraisers.map(fundraiser =>
         <FundraiserCard key={`${fundraiser}`} fundraiser={fundraiser} />
       )
-    })
   }
 
   /* Effects */
   useEffect(() => {
+    /* TODO: check for page pased by url */
     getFundraisers({ getBy: 10, offset: 0 })
+      .then((FUNDRAISERS: Object)  => {
+        setState({ ...state, ...FUNDRAISERS })
+      })
   }, [])
 
   return (
