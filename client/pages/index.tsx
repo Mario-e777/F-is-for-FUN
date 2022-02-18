@@ -142,7 +142,6 @@ const TitleContainer = styled.div`
 
 export default function Home() {
   const [state, setState] = useState({
-    contract: null,
     accounts: [],
     fundraisers: null,
     funTotal: null
@@ -159,9 +158,8 @@ export default function Home() {
   useEffect(() => {
     /* TODO: check for page pased by url */
     getFundraisers({ getBy: 10, offset: 0 })
-      .then((FUNDRAISERS: Object)  => {
-        setState({ ...state, ...FUNDRAISERS })
-      })
+      .then((FUNDRAISERS: Object) => setState({ ...state, ...FUNDRAISERS }))
+      .catch(error => console.error(error))
   }, [])
 
   return (

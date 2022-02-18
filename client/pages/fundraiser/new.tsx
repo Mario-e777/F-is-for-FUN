@@ -1,17 +1,16 @@
 /* React stuff */
-import { useState, useEffect, FormEvent, useRef } from 'react'
+import React, { FormEvent, useRef } from 'react'
 import styled from 'styled-components'
 
 /* Components */
 import Layout from "../../components/layout"
 
-/* Contracts */
-import FactoryContract from '../../contracts/Factory.json'
+/* Contracts services */
+import { createFundraiser } from '../../services/fundraisers'
 
 /* Utils */
 import { COLORS, SHADOWS } from '../../utils/styles_constants'
 import { TRANSITIONS } from '../../utils/styles_constants'
-import { getWeb3 }  from '../../utils/scripts'
 import Button from '../../components/button'
 
 const NewFundraiserContainer = styled.section`
@@ -105,70 +104,37 @@ export default function New() {
   const ContractBeneficiary = useRef(null)
   const ContractOwner = useRef(null)
 
-  const [state, setState] = useState({
-    web3: null,
-    contract: null,
-    accounts: [],
-  })
-
   /* Functions */
   const createNewFundraiser = async (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    await state.contract.methods.createFundraiser(
-      ContractName.current.value,
-      ContractWebsite.current.value,
-      ContractImage.current.value,
-      ContractDescription.current.value,
-      ContractBeneficiary.current.value,
-    ).send({ from: ContractOwner.current.value })
-    alert('Successfully created fundraiser')
+    e.preventDefault()
+    createFundraiser({
+      contract_name: ContractName.current.value,
+      contract_website: ContractWebsite.current.value,
+      contract_image: ContractImage.current.value,
+      contract_description: ContractDescription.current.value,
+      contract_beneficiary: ContractBeneficiary.current.value,
+      contract_owner: ContractOwner.current.value
+    }).then(response => alert(response))
+      .catch(error => console.error(error))
   }
 
-  useEffect(() => {
-    const init = async () => {
-      try {
-        const web3 = await getWeb3()
-        const networkId = await web3.eth.net.getId()
-        const deployedNetwork = FactoryContract.networks[networkId]
-        const accounts = await web3.eth.getAccounts()
-        const instance = new web3.eth.Contract(
-          FactoryContract.abi,
-          deployedNetwork && deployedNetwork.address,
-        )
-        setState({ ...state, web3, contract: instance, accounts })
-      } catch (error) {
-        alert('Failed to load web3, accounts, or contract. Check console for details.');
-        console.error(error);
-      }
-    }
-    init();
-  }, []);
+  const FormInput = React.forwardRef((props: any, ref) => (
+    <label className={props.className} >
+      <p>{props.label} <span>*</span></p>
+      <input ref={ref} placeholder={props.placeHolder} type='text' required />
+    </label>
+  ));
 
   return (
     <Layout title='New Fundraiser' >
       <NewFundraiserContainer>
         <h2>Create fundraiser</h2>
         <form onSubmit={e => createNewFundraiser(e)} >
-          <label>
-            <p>Fundraiser`s name <span>*</span></p>
-            <input ref={ContractName} placeholder="The Bacon Pancake Fundraiser" type='text' required />
-          </label>
-          <label>
-            <p>Website <span>*</span></p>
-            <input ref={ContractWebsite} placeholder="https://mysite.com" type='text' required />
-          </label>
-          <label className='full-grid' >
-            <p>Image url <span>*</span></p>
-            <input ref={ContractImage} placeholder="https://mysite.com/image.png" type='text' required />
-          </label>
-          <label className='full-grid' >
-            <p>Beneficiary Address <span>*</span></p>
-            <input ref={ContractBeneficiary} placeholder="0x0000000.." type='text' required />
-          </label>
-          <label className='full-grid' >
-            <p>Owner address <span>*</span></p>
-            <input ref={ContractOwner} placeholder="0x0000000.." type='text' required />
-          </label>
+          <FormInput ref={ContractName} label='Fundraiser`s name' placeHolder='The Bacon Pancake Fundraiser' />
+          <FormInput ref={ContractWebsite} label='Website' placeHolder='https://mysite.com' />
+          <FormInput ref={ContractImage} label='Image url' placeHolder='https://mysite.com/image.png' className='full-grid' />
+          <FormInput ref={ContractBeneficiary} label='Beneficiary Address' placeHolder='0x0000000...' className='full-grid' />
+          <FormInput ref={ContractOwner} label='Owner address' placeHolder='0x0000000...' className='full-grid' />
           <label className='description-container' >
             <p>Description <span>*</span></p>
             <textarea ref={ContractDescription} placeholder="Fundraising to buy much more bacon and prepare with pancakes :p" required />
