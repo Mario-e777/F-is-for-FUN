@@ -144,7 +144,8 @@ export default function Home() {
   const [state, setState] = useState({
     accounts: [],
     fundraisers: null,
-    funTotal: null
+    funTotal: null,
+    currentPage: 1
   })
 
   const FundraisersCards = () => {
@@ -157,10 +158,10 @@ export default function Home() {
   /* Effects */
   useEffect(() => {
     /* TODO: check for page pased by url */
-    getFundraisers({ getBy: 10, offset: 0 })
+    getFundraisers({ getBy: 6, offset: ((state.currentPage * 6) - 6) })
       .then((FUNDRAISERS: Object) => setState({ ...state, ...FUNDRAISERS }))
       .catch(error => console.error(error))
-  }, [])
+  }, [state.currentPage])
 
   return (
     <Layout title={'Home'} >
@@ -183,7 +184,7 @@ export default function Home() {
           </div>
         </div>
 
-        <Paginator />
+        <Paginator pageState={state} pageSetState={setState} />
 
         <div className='cards-container'>
           {FundraisersCards()}
