@@ -26,6 +26,21 @@ const getAccountsAndContracts = async () => {
   return { accounts, contract }
 }
 
+const totalFundraisers = () => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      const { contract } = await getAccountsAndContracts()
+      const totalFundraisers = await contract.methods.fundraisersCount().call()
+
+      resolve({
+        totalFundraisers
+      })
+    } catch (error) {
+      reject(error)
+    }
+  })
+}
+
 
 const getFundraisers = ({ getBy, offset }: { getBy: number, offset: number }) => {
   return new Promise(async (resolve, reject) => {
@@ -67,5 +82,6 @@ const createFundraiser = (fundraiser: Fundraiser) => {
 
 export {
   getFundraisers,
-  createFundraiser
+  createFundraiser,
+  totalFundraisers
 }
