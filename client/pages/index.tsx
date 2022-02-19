@@ -10,7 +10,7 @@ import FundraiserCard from '../components/fundraiser-card'
 import Paginator from '../components/paginator'
 
 /* Utils */
-import { COLORS, SHADOWS, TRANSITIONS } from '../utils/styles_constants'
+import { COLORS, SHADOWS } from '../utils/styles_constants'
 import Button from '../components/button'
 
 /* Contracts services */
@@ -24,43 +24,6 @@ const HomeContainer = styled.section`
   grid-template-columns: 1fr;
   grid-template-rows: fit-content 1fr;
   overflow: scroll;
-
-  & nav {
-    width: 100%;
-    height: fit-content;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 1rem;
-    font-size: 1.3rem;
-    column-gap: 0.8rem;
-
-    & span {
-      opacity: 0.5;
-      &:hover {
-        opacity: 1;
-        cursor: pointer;
-        color: ${COLORS.black};
-      }
-    }
-
-    & a {
-      opacity: 0.5;
-      transition-duration: ${TRANSITIONS.normal};
-
-      &.selected {
-        opacity: 1;
-        text-decoration-line: underline;
-        color: ${COLORS.black};
-      }
-
-      &:hover {
-        color: ${COLORS.black};
-        opacity: 1;
-        text-decoration-line: underline;
-      }
-    }
-  }
 
   & .top-container {
     width: 100vw;
@@ -148,12 +111,10 @@ export default function Home() {
     currentPage: 1
   })
 
-  const FundraisersCards = () => {
-    return state.accounts.length > 0 
-      && state.fundraisers.map(fundraiser =>
-        <FundraiserCard key={`${fundraiser}`} fundraiser={fundraiser} />
-      )
-  }
+  const FundraisersCards = () => state.accounts.length > 0
+    && state.fundraisers.map(fundraiser =>
+      <FundraiserCard key={`${fundraiser}`} fundraiser={fundraiser} />
+    )
 
   /* Effects */
   useEffect(() => {
