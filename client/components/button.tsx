@@ -24,7 +24,7 @@ const ButtonContainer = styled.span`
   }
 
   &> a, button {
-    width: 100%;
+    width: fit-content;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -38,10 +38,22 @@ const ButtonContainer = styled.span`
     box-shadow: ${SHADOWS.small};
     font-family: SofiaProMedium;
 
+    &.full {
+      width: 100%;
+    }
+
+    
     &:hover {
       box-shadow: ${SHADOWS.medium};
       cursor: pointer;
     }
+  }
+  
+  & .transparent {
+    background: linear-gradient(215deg, #fad0c47b 0%, #f1a7f176 74%) 0% 0% no-repeat padding-box padding-box transparent;
+    backdrop-filter: blur(10px);
+    font-size: 1rem;
+    /* border: none; */
   }
 `
 
@@ -51,19 +63,21 @@ export default function Button(
     href,
     children,
     type,
-    color
+    color,
+    className
   }: {
     children: string,
     color: string,
+    className?: string,
     type?: string,
     link?: boolean,
-    href?: string
+    href?: string,
   }) {
   return (
-    <ButtonContainer>
+    <ButtonContainer className={`${className}`} >
       {link
-        ? <Link href={href}><a className={`${color} button`}>{children}</a></Link>
-        : <button type={type} className={`${color} button`}>{children}</button>}
+        ? <Link href={href}><a className={`${color} ${className} button`}>{children}</a></Link>
+        : <button type={type} className={`${color} ${className} button`}>{children}</button>}
     </ButtonContainer>
   )
 }
