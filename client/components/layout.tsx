@@ -1,6 +1,7 @@
 import Head from 'next/head'
 import styled from 'styled-components'
-import { COLORS } from '../utils/styles_constants';
+import { COLORS } from '../utils/styles_constants'
+import Button from '../components/button'
 
 const LayoutContainer = styled.div`
   background-color: #fad0c4;
@@ -11,14 +12,37 @@ const LayoutContainer = styled.div`
   overflow: scroll;
 
   & main {
-    & h1 {
-      color: ${COLORS.black};
-      font-size: 3.85rem;
-      font-family: PhilosopherRegular;
-      margin-bottom: 0.8rem;
-      width: 100%;
-      text-align: center;
+    & .head-container {
       padding-top: 1.5rem;
+      position: relative;
+
+      & h1 {
+        color: ${COLORS.black};
+        font-size: 3.85rem;
+        font-family: PhilosopherRegular;
+        margin-bottom: 0.8rem;
+        text-align: center;
+      }
+    }
+    & .menu-buttons-container {
+      position: absolute;
+      width: 100vw;
+      height: 6rem;
+      right: 0;
+      top: 1.2rem;
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      /* background-color: yellowgreen; */
+      padding: 0 1.2rem;
+
+      & .right-buttons-container {
+        grid-column: 2/3;
+        grid-row: 1/2;
+        justify-self: end;
+        /* align-self: center; */
+        display: flex;
+        column-gap: 1rem;
+      }
     }
   }
 `;
@@ -52,8 +76,16 @@ export default function Layout({ children, title }) {
       </Head>
 
       <main>
-        <h1>✨ F is for FUN ✨</h1>
+        <div className='head-container'>
+          <h1>✨ F is for FUN ✨</h1>
+        </div>
         {children}
+        <header className='menu-buttons-container' >
+          <div className='right-buttons-container' >
+            <Button color='transparent' className='menu-button' >About this project</Button>
+            {/* <Button color='transparent' className='menu-button' >Menu</Button> */}
+          </div>
+        </header>
       </main>
 
       <footer>

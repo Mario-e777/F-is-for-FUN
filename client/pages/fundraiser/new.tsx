@@ -1,5 +1,7 @@
 /* React stuff */
 import React, { FormEvent, useRef } from 'react'
+
+/* Modules */
 import styled from 'styled-components'
 
 /* Components */
@@ -94,6 +96,12 @@ const NewFundraiserContainer = styled.section`
   & h2 {
     color: ${COLORS.black};
   }
+
+  & p {
+    max-width: 35rem;
+    font-size: 1.2rem;
+    line-height: 1.8rem;
+  }
 `
 
 export default function New() {
@@ -129,6 +137,7 @@ export default function New() {
     <Layout title='New Fundraiser' >
       <NewFundraiserContainer>
         <h2>Create fundraiser</h2>
+        <p>Create a fundraiser to be sponsored by people, we will deposit all accumulated value to the beneficiary address after the fundraiser ends.</p>
         <form onSubmit={e => createNewFundraiser(e)} >
           <FormInput ref={ContractName} label='Fundraiser`s name' placeHolder='The Bacon Pancake Fundraiser' />
           <FormInput ref={ContractWebsite} label='Website' placeHolder='https://mysite.com' />
@@ -139,8 +148,8 @@ export default function New() {
             <p>Description <span>*</span></p>
             <textarea ref={ContractDescription} placeholder="Fundraising to buy much more bacon and prepare with pancakes :p" required />
           </label>
-          <Button href='/' link color='red' >Cancel</Button>
-          <Button type='submit' color='green' >Create fundraiser</Button>
+          <Button className='full' href='/' link color='red' >Cancel</Button>
+          <Button className='full' type='submit' color='green' >Create fundraiser</Button>
         </form>
       </NewFundraiserContainer>
     </Layout>
