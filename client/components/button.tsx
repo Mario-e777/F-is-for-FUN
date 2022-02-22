@@ -12,6 +12,10 @@ import { COLORS } from '../utils/styles_constants'
 
 const ButtonContainer = styled.span`
   /* height: fit-content; */
+  display: block;
+  &.full {
+    width: 100%;
+  }
 
   & .green {
     background-color: ${COLORS.green_light};

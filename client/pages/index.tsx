@@ -14,7 +14,7 @@ import { COLORS, SHADOWS } from '../utils/styles_constants'
 import Button from '../components/button'
 
 /* Contracts services */
-import { getFundraisers } from '../services/fundraisers'
+import { getFundraisers, totalFundraisers } from '../services/fundraisers'
 
 /* Styled components */
 const HomeContainer = styled.section`
@@ -68,10 +68,12 @@ const TitleContainer = styled.div`
   padding: 0 1.5rem 1.5rem 1.5rem;
   z-index: +1;
   flex-direction: column;
+  width: 100%;
+  max-width: 27rem;
+  justify-self: center;
 
   & .input-container {
     position: relative;
-    max-width: 24rem;
     width: 100%;
     display: flex;
     align-items: center;
@@ -85,7 +87,6 @@ const TitleContainer = styled.div`
 
   & input {
     width: 100%;
-    max-width: 24rem;
     padding: 1.1rem 3rem 1.1rem 1.3rem;
     border: 1px solid ${COLORS.black};
     border-radius: 100px;
@@ -101,6 +102,11 @@ const TitleContainer = styled.div`
     flex-wrap: wrap;
     justify-content: center;
   }
+
+  & .buttons-container {
+    width: 100%;
+    display: flex;
+  }
 `
 
 export default function Home() {
@@ -108,7 +114,8 @@ export default function Home() {
     accounts: [],
     fundraisers: null,
     funTotal: null,
-    currentPage: 1
+    currentPage: 1,
+    totalFundraisers: 0
   })
 
   const FundraisersCards = () => state.accounts.length > 0
@@ -118,11 +125,15 @@ export default function Home() {
 
   /* Effects */
   useEffect(() => {
-    /* TODO: check for page pased by url */
     getFundraisers({ getBy: 6, offset: ((state.currentPage * 6) - 6) })
-      .then((FUNDRAISERS: Object) => setState({ ...state, ...FUNDRAISERS }))
+      .then((FUNDRAISERS: Object) => {
+        /* TODO: check for page pased by url */
+        totalFundraisers()
+          .then(total => setState({ ...state, totalFundraisers: parseInt(total.totalFundraisers), ...FUNDRAISERS }))
+          .catch(error => console.error(error))
+      })
       .catch(error => console.error(error))
-  }, [state.currentPage])
+  }, [state.currentPage,])
 
   return (
     <Layout title={'Home'} >
@@ -130,18 +141,19 @@ export default function Home() {
 
         <div className='top-container'>
           <div className='head-container'>
-            <div className='currency-total eth' >0.00 ETH</div>
+            <div className='currency-total eth' >{state.totalFundraisers} Fundraisers created</div>
             <TitleContainer>
               <span className='input-container' >
                 <span>🔎</span>
                 <input type='text' placeholder='Search fundraiser' />
               </span>
-              <div>
+              <div className='buttons-container' >
                 <Button href='fundraiser/new' link color='green' >Create fundraiser</Button>
-                <Button href='fundraiser/new' link color='blue' >Get & yield FUN</Button>
+                {/* <Button href='get-fun' link color='blue' >Connect wallet</Button> */}
+                <Button href='get-fun' link color='blue' >My fundraisers</Button>
               </div>
             </TitleContainer>
-            <div className='currency-total fun' >{state.funTotal} FUN</div>
+            <div className='currency-total fun' >{state.funTotal} ETH Accumulated</div>
           </div>
         </div>
 

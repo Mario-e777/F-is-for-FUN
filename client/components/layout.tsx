@@ -82,7 +82,7 @@ export default function Layout({ children, title }) {
         {children}
         <header className='menu-buttons-container' >
           <div className='right-buttons-container' >
-            <Button color='transparent yellow' className='menu-button' >About this project</Button>
+            <Button color='transparent' className='menu-button' >About this project</Button>
             {/* <Button color='transparent' className='menu-button' >Menu</Button> */}
           </div>
         </header>
