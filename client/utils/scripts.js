@@ -5,6 +5,17 @@ const getWeb3 = () => {
     // Modern dapp browsers...
     if (window.ethereum) {
       const web3 = new Web3(window.ethereum)
+      // detect Metamask account change
+
+      window.ethereum.on('accountsChanged', function (accounts) {
+        console.log('accountsChanges',accounts);
+      });
+
+      // detect Network account change
+      window.ethereum.on('networkChanged', function(networkId){
+        console.log('networkChanged',networkId);
+      });
+
       try {
         await window.ethereum.enable()
         resolve(web3)
