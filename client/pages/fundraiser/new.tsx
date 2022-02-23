@@ -139,11 +139,11 @@ export default function New() {
         <h2>Create fundraiser</h2>
         <p>Create a fundraiser to be sponsored by people, we will deposit all accumulated value to the beneficiary address after the fundraiser ends.</p>
         <form onSubmit={e => createNewFundraiser(e)} >
-          <FormInput ref={ContractName} label='Fundraiser`s name' placeHolder='The Bacon Pancake Fundraiser' />
+          <FormInput ref={ContractName} label="Name" placeHolder='The Bacon Pancake Fundraiser' />
           <FormInput ref={ContractWebsite} label='Website' placeHolder='https://mysite.com' />
           <FormInput ref={ContractImage} label='Image url' placeHolder='https://mysite.com/image.png' className='full-grid' />
           <FormInput ref={ContractBeneficiary} label='Beneficiary Address' placeHolder='0x0000000...' className='full-grid' />
-          <FormInput ref={ContractOwner} label='Owner address' placeHolder='0x0000000...' className='full-grid' />
+          <FormInput ref={ContractOwner} label="Fundraiser owner address" placeHolder='0x0000000...' className='full-grid' />
           <label className='description-container' >
             <p>Description <span>*</span></p>
             <textarea ref={ContractDescription} placeholder="Fundraising to buy much more bacon and prepare with pancakes :p" required />

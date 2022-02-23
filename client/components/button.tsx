@@ -55,7 +55,7 @@ const ButtonContainer = styled.span`
   
   & .transparent {
     background: linear-gradient(215deg, #fad0c47b 0%, #f1a7f176 74%) 0% 0% no-repeat padding-box padding-box transparent;
-    backdrop-filter: blur(10px);
+    backdrop-filter: blur(20px);
     font-size: 1rem;
     /* border: none; */
   }

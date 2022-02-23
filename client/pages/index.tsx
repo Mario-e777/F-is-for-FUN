@@ -150,10 +150,10 @@ export default function Home() {
               <div className='buttons-container' >
                 <Button href='fundraiser/new' link color='green' >Create fundraiser</Button>
                 {/* <Button href='get-fun' link color='blue' >Connect wallet</Button> */}
-                <Button href='get-fun' link color='blue' >My fundraisers</Button>
+                <Button href='get-fun' link color='blue' >Get some FUN</Button>
               </div>
             </TitleContainer>
-            <div className='currency-total fun' >{state.funTotal} ETH Accumulated</div>
+            <div className='currency-total fun' >{/* {state.funTotal} */} 3,471.238 FUN accumulated</div>
           </div>
         </div>
 
