@@ -26,7 +26,6 @@ const HomeContainer = styled.section`
   overflow: scroll;
 
   & .top-container {
-    width: 100vw;
     display: flex;
     justify-content: center;
     width: calc(100vw - 1.5rem);
@@ -44,6 +43,8 @@ const HomeContainer = styled.section`
         font-size: 1.25rem;
         color: ${COLORS.black};
         font-family: SofiaProMedium;
+        text-align: center;
+        line-height: 1.7rem;
       }
     }
   }
@@ -141,19 +142,19 @@ export default function Home() {
 
         <div className='top-container'>
           <div className='head-container'>
-            <div className='currency-total eth' >{state.totalFundraisers} Fundraisers created</div>
+            <div className='currency-total eth' >{state.totalFundraisers} Fundraisers created <br/> 1,223,549 FUN accumulated</div>
             <TitleContainer>
               <span className='input-container' >
                 <span>🔎</span>
                 <input type='text' placeholder='Search fundraiser' />
               </span>
               <div className='buttons-container' >
-                <Button href='fundraiser/new' link color='green' >Create fundraiser</Button>
-                {/* <Button href='get-fun' link color='blue' >Connect wallet</Button> */}
-                <Button href='get-fun' link color='blue' >Get some FUN</Button>
+                <Button className='normal' href='fundraiser/new' link color='green' >Create fundraiser</Button>
+                {/* <Button className='normal' href='get-fun' link color='blue' >Connect wallet</Button> */}
+                <Button className='normal' href='get-fun' link color='blue' >Get some FUN</Button>
               </div>
             </TitleContainer>
-            <div className='currency-total fun' >{/* {state.funTotal} */} 3,471.238 FUN accumulated</div>
+            <div className='currency-total fun' >{/* {state.funTotal} */} 0.0137 ETH <br/> 3,471 FUN available</div>
           </div>
         </div>
 

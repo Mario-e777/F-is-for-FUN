@@ -11,8 +11,10 @@ import { TRANSITIONS } from '../utils/styles_constants'
 import { COLORS } from '../utils/styles_constants'
 
 const ButtonContainer = styled.span`
+  height: fit-content;
   /* height: fit-content; */
   display: block;
+  
   &.full {
     width: 100%;
   }
@@ -36,7 +38,9 @@ const ButtonContainer = styled.span`
     color: ${COLORS.black};
     border: 1px solid ${COLORS.black};
     border-radius: 3px;
-    font-size: 1.1rem;
+    &.normal {
+      font-size: 1.1rem !important;
+    }
     transition-duration: ${TRANSITIONS.normal};
     white-space: nowrap;
     box-shadow: ${SHADOWS.small};
@@ -55,7 +59,7 @@ const ButtonContainer = styled.span`
   
   & .transparent {
     background: linear-gradient(215deg, #fad0c47b 0%, #f1a7f176 74%) 0% 0% no-repeat padding-box padding-box transparent;
-    backdrop-filter: blur(20px);
+    backdrop-filter: blur(30px);
     font-size: 1rem;
     /* border: none; */
   }
