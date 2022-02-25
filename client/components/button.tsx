@@ -22,6 +22,9 @@ const ButtonContainer = styled.span`
   & .green {
     background-color: ${COLORS.green_light};
   }
+  & .gray {
+    background-color: ${COLORS.gray};
+  }
   & .blue {
     background-color: ${COLORS.blue_light};
   }
@@ -35,6 +38,9 @@ const ButtonContainer = styled.span`
     align-items: center;
     justify-content: center;
     padding: 1.1rem 1.3rem;
+    &.mini {
+      padding: 0.9rem 1rem;
+    }
     color: ${COLORS.black};
     border: 1px solid ${COLORS.black};
     border-radius: 3px;

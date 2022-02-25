@@ -148,8 +148,8 @@ export default function New() {
             <p>Description <span>*</span></p>
             <textarea ref={ContractDescription} placeholder="Fundraising to buy much more bacon and prepare with pancakes :p" required />
           </label>
-          <Button className='full' href='/' link color='red' >Cancel</Button>
-          <Button className='full' type='submit' color='green' >Create fundraiser</Button>
+          <Button className='full normal' href='/' link color='red' >Cancel</Button>
+          <Button className='full normal' type='submit' color='green' >Create fundraiser</Button>
         </form>
       </NewFundraiserContainer>
     </Layout>

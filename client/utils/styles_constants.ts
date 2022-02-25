@@ -3,6 +3,7 @@ const COLORS = {
   green_light: 'rgb(99, 223, 136)',
   blue_light: 'rgb(127, 191, 249)',
   background_gray: 'rgba(248, 248, 248, 0.888)',
+  gray: 'rgba(248, 248, 248)',
   yellow_light: 'rgb(248, 195, 147)',
   red_light: 'rgb(227, 122, 114)',
 }
