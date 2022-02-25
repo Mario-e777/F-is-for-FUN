@@ -38,7 +38,7 @@ const PriceContainer = styled.div`
   gap: 1.3rem;
   display: grid;
   flex-direction: column;
-  background: linear-gradient(018deg, rgba(255, 255, 255, 0.444) 0%, rgba(255, 255, 255, 0.82) 100%) 0% 0% no-repeat padding-box padding-box transparent;
+  background: linear-gradient(018deg, rgba(255, 255, 255, 0.73) 0%, rgba(255, 255, 255, 0.83) 100%) 0% 0% no-repeat padding-box padding-box transparent;
   backdrop-filter: blur(10px);
 
   & h2 {
@@ -62,7 +62,7 @@ const PriceContainer = styled.div`
     padding: 1.3rem;
     display: flex;
     align-items: center;
-    gap: 1.5rem;
+    gap: 1.3rem;
     width: 100%;
     
     & img {
@@ -74,6 +74,33 @@ const PriceContainer = styled.div`
     & p {
       text-align: start;
       font-size: 1.1rem;
+    }
+
+    & .price-convertor-container {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 0.3rem;
+      
+      & div {
+        width: 100%; 
+        display: flex; 
+        justify-content: space-between;
+        gap: 0.9rem;
+
+        & button {
+          white-space: nowrap;
+        }
+
+        & input {
+          border-radius: 5px;
+          border: none;
+          width: 100%;
+          box-shadow: ${SHADOWS.small};
+          padding: 0.8rem 1rem;
+          font-size: 1rem;
+        }
+      }
     }
   }
 `
@@ -105,7 +132,7 @@ export default function GetFun() {
     <Layout title='Get and yield FUN' >
       <GetFunContainer>
         <h2>Get some FUN</h2>
-        <p>Stake your ETH with us and get some FUN, FUN tokens could be donated to any fundraiser, 1 FUN = 100 DAI.</p>
+        <p>Swap your ETH and get some FUN, once you get FUN it could be donated to any fundraiser, 1 FUN = 100 DAI.</p>
         <PriceSectionContainer>
           <div className="price-cards-container">
             <Button className="normal" color="transparent" href="/" link >{'← Back'}</Button>
@@ -115,13 +142,13 @@ export default function GetFun() {
               <div className='price-container' >
                 <img src="https://oasis.app/static/img/tokens/eth.png" alt="" ></img>
 
-                <div style={{ width: '100%' }} >
+                <div className="price-convertor-container" >
                   <p>Min 1 ETH</p>
-                  <div style={{ width: '100%', display: 'flex', justifyContent: 'space-between' }} >
-                    <span>-----------------o----</span>
-                    <span>o (Max)</span>
+                  <div>
+                    <input placeholder="0.0 ETH" type='number' />
+                    <Button className="mini" color='yellow' type="button" >Max</Button>
                   </div>
-                  <p>You'll get 44,371 FUN</p>
+                  <p>You'll get 44,371 FUN ✨</p>
                 </div>
               </div>
               <Button className="full normal" color='green' type="button" >Get FUN</Button>
