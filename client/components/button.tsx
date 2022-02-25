@@ -56,7 +56,6 @@ const ButtonContainer = styled.span`
       width: 100%;
     }
 
-    
     &:hover {
       box-shadow: ${SHADOWS.medium};
       cursor: pointer;
