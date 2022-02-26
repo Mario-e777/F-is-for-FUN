@@ -78,12 +78,14 @@ const PriceContainer = styled.div`
       display: flex;
       flex-direction: column;
       gap: 0.3rem;
+      justify-content: center;
       
       & div {
         width: 100%; 
         display: flex; 
         justify-content: space-between;
         gap: 0.9rem;
+        align-items: center;
 
         & button {
           white-space: nowrap;
@@ -108,7 +110,7 @@ const PriceContainer = styled.div`
       /* flex-direction: column; */
 
       & .image-container {
-        min-width: 6.43rem;
+        min-width: 6.3rem;
         height: auto;
 
         & .coin-image {
@@ -123,6 +125,12 @@ const PriceContainer = styled.div`
 `
 
 export default function GetFun() {
+
+  function getFun(e) {
+    e.preventDefault();
+    console.log('GET FUN!!!')
+  }
+
   return (
     <Layout title='Get and yield FUN' >
       <GetFunContainer>
@@ -135,7 +143,7 @@ export default function GetFun() {
               <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit.</p>
               <p>1ETH = 34,237 DAI = 342.37 FUN</p>
             </div>
-            <div className='price-container' >
+            <form onSubmit={e => getFun(e)} className='price-container' >
               <div className="input-container">
                 <div className="image-container">
                   <Image
@@ -173,8 +181,8 @@ export default function GetFun() {
                   </div>
                 </div>
               </div>
-              <Button className="full normal green" type="button" >Get FUN</Button>
-            </div>
+              <Button className="full normal green" type="submit" >Get FUN</Button>
+            </form>
           </PriceContainer>
         </FormLayout>
       </GetFunContainer>
