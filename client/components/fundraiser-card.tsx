@@ -121,7 +121,7 @@ export default function FundraiserCard({ fundraiser }) {
         </div>
         <div>
           <p><span>Total donations:<br />$173.43 USD → 0.000134 FUN ✨</span></p>
-          <Button className="full normal" color="yellow" href='fundraiser/new' link>View more</Button>
+          <Button className="full normal yellow" href='fundraiser/new' link>View more</Button>
         </div>
       </div>
     </FundraiserCardContainer>

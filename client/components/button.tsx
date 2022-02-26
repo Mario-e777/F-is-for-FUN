@@ -12,6 +12,7 @@ import { COLORS } from '../utils/styles_constants'
 
 const ButtonContainer = styled.span`
   height: fit-content;
+  width: fit-content;
   /* height: fit-content; */
   display: block;
   
@@ -32,20 +33,27 @@ const ButtonContainer = styled.span`
     background-color: ${COLORS.yellow_light};
   }
 
+  & .transparent {
+    background: linear-gradient(215deg, #fad0c47b 0%, #f1a7f176 74%) 0% 0% no-repeat padding-box padding-box transparent;
+    backdrop-filter: blur(8px);
+    font-size: 1rem;
+    /* border: none; */
+  }
+
   &> a, button {
     width: fit-content;
     display: flex;
     align-items: center;
     justify-content: center;
     padding: 1.1rem 1.3rem;
-    &.mini {
-      padding: 0.9rem 1rem;
-    }
     color: ${COLORS.black};
     border: 1px solid ${COLORS.black};
     border-radius: 3px;
     &.normal {
-      font-size: 1.1rem !important;
+      font-size: 1.1rem;
+    }
+    &.mini {
+      font-size: 1rem;
     }
     transition-duration: ${TRANSITIONS.normal};
     white-space: nowrap;
@@ -62,12 +70,6 @@ const ButtonContainer = styled.span`
     }
   }
   
-  & .transparent {
-    background: linear-gradient(215deg, #fad0c47b 0%, #f1a7f176 74%) 0% 0% no-repeat padding-box padding-box transparent;
-    backdrop-filter: blur(30px);
-    font-size: 1rem;
-    /* border: none; */
-  }
 `
 
 export default function Button(
@@ -76,11 +78,9 @@ export default function Button(
     href,
     children,
     type,
-    color,
     className
   }: {
-    children: string,
-    color: string,
+    children: string
     className?: string,
     type?: string,
     link?: boolean,
@@ -89,8 +89,8 @@ export default function Button(
   return (
     <ButtonContainer className={`${className}`} >
       {link
-        ? <Link href={href}><a className={`${color} ${className} button`}>{children}</a></Link>
-        : <button type={type} className={`${color} ${className} button`}>{children}</button>}
+        ? <Link href={href}><a className={`${className} button`}>{children}</a></Link>
+        : <button type={type} className={`${className} button`}>{children}</button>}
     </ButtonContainer>
   )
 }

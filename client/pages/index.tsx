@@ -149,9 +149,8 @@ export default function Home() {
                 <input type='text' placeholder='Search fundraiser' />
               </span>
               <div className='buttons-container' >
-                <Button className='normal' href='fundraiser/new' link color='green' >Create fundraiser</Button>
-                {/* <Button className='normal' href='get-fun' link color='blue' >Connect wallet</Button> */}
-                <Button className='normal' href='get-fun' link color='blue' >Get some FUN</Button>
+                <Button className='normal green' href='fundraiser/new' link >Create fundraiser</Button>
+                <Button className='normal blue' href='get-fun' link >Get some FUN</Button>
               </div>
             </TitleContainer>
             <div className='currency-total fun' >{/* {state.funTotal} */} 0.0137 ETH <br/> 3,471 FUN available</div>
