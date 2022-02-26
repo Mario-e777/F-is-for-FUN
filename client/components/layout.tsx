@@ -34,6 +34,7 @@ const LayoutContainer = styled.div`
       grid-template-columns: repeat(2, 1fr);
       /* background-color: yellowgreen; */
       padding: 0 1.2rem;
+      z-index: 0;
 
       & .right-buttons-container {
         grid-column: 2/3;
@@ -82,8 +83,7 @@ export default function Layout({ children, title }) {
         {children}
         <header className='menu-buttons-container' >
           <div className='right-buttons-container' >
-            <Button color='transparent' className='menu-button' >About this project</Button>
-            {/* <Button color='transparent' className='menu-button' >Menu</Button> */}
+            <Button className='menu-button transparent' >About this project</Button>
           </div>
         </header>
       </main>

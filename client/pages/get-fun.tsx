@@ -7,6 +7,8 @@ import styled from 'styled-components'
 /* Utils */
 import { COLORS, SHADOWS } from "../utils/styles_constants"
 import Button from "../components/button"
+import FormLayout from "../components/form-layout"
+import Image from "next/image"
 
 const GetFunContainer = styled.section`
   display: flex;
@@ -58,18 +60,13 @@ const PriceContainer = styled.div`
     backdrop-filter: blur(30px);
     box-shadow: ${SHADOWS.small};
     border-radius: 5px;
-    border: 1px solid ${COLORS.black};
+    /* border: 1px solid ${COLORS.black}; */
     padding: 1.3rem;
     display: flex;
+    flex-direction: column;
     align-items: center;
-    gap: 1.3rem;
+    gap: 1rem;
     width: 100%;
-    
-    & img {
-      justify-self: center;
-      width: 5rem;
-      height: auto;
-    }
     
     & p {
       text-align: start;
@@ -97,32 +94,30 @@ const PriceContainer = styled.div`
           border: none;
           width: 100%;
           box-shadow: ${SHADOWS.small};
-          padding: 0.8rem 1rem;
+          padding: 1.1rem 1.3rem;
           font-size: 1rem;
+          border: 1px solid ${COLORS.black};
         }
       }
     }
-  }
-`
 
-const PriceSectionContainer = styled.div`
-  width: 100vw;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 0 1.5rem;
-
-  & .price-cards-container {
-    gap: 1.5rem;
-    width: 100%;
-    max-width: 1440px;
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-
-    & span {
-      grid-column: 1/2;
+    & .input-container {
       display: flex;
-      justify-content: end;
+      width: 100%;
+      gap: 1.3rem;
+      /* flex-direction: column; */
+
+      & .image-container {
+        min-width: 6.43rem;
+        height: auto;
+
+        & .coin-image {
+          justify-self: center;
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+        }
+      }
     }
   }
 `
@@ -133,28 +128,55 @@ export default function GetFun() {
       <GetFunContainer>
         <h2>Get some FUN</h2>
         <p>Swap your ETH and get some FUN, once you get FUN it could be donated to any fundraiser, 1 FUN = 100 DAI.</p>
-        <PriceSectionContainer>
-          <div className="price-cards-container">
-            <Button className="normal" color="transparent" href="/" link >{'← Back'}</Button>
-            <PriceContainer>
-              <h2>Get all the FUN you want 🦄</h2>
-              <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Nesciunt minus recusandae officia illum modi alias.</p>
-              <div className='price-container' >
-                <img src="https://oasis.app/static/img/tokens/eth.png" alt="" ></img>
-
+        <FormLayout>
+          <PriceContainer>
+            <h2>Get all the FUN you want 🦄</h2>
+            <div>
+              <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit.</p>
+              <p>1ETH = 34,237 DAI = 342.37 FUN</p>
+            </div>
+            <div className='price-container' >
+              <div className="input-container">
+                <div className="image-container">
+                  <Image
+                    className="coin-image"
+                    src="https://oasis.app/static/img/tokens/eth.png"
+                    alt=""
+                    width={0}
+                    height={0}
+                    layout="responsive"
+                  />
+                </div>
                 <div className="price-convertor-container" >
                   <p>Min 1 ETH</p>
                   <div>
-                    <input placeholder="0.0 ETH" type='number' />
-                    <Button className="mini" color='yellow' type="button" >Max</Button>
+                    <input placeholder="1.00 ETH" type='number' />
+                    <Button className="mini yellow" type="button" >Max</Button>
                   </div>
-                  <p>You'll get 44,371 FUN ✨</p>
                 </div>
               </div>
-              <Button className="full normal" color='green' type="button" >Get FUN</Button>
-            </PriceContainer>
-          </div>
-        </PriceSectionContainer>
+              <div className="input-container">
+                <div className="image-container">
+                  <Image
+                    className="coin-image"
+                    src="https://oasis.app/static/img/tokens/eth.png"
+                    alt=""
+                    width={0}
+                    height={0}
+                    layout="responsive"
+                  />
+                </div>
+                <div className="price-convertor-container" >
+                  <p>You'll get</p>
+                  <div>
+                    <input placeholder='777.00 FUN' type='number' />
+                  </div>
+                </div>
+              </div>
+              <Button className="full normal green" type="button" >Get FUN</Button>
+            </div>
+          </PriceContainer>
+        </FormLayout>
       </GetFunContainer>
     </Layout>
   )
