@@ -8,10 +8,10 @@ import styled from 'styled-components'
 import Layout from '../components/layout'
 import FundraiserCard from '../components/fundraiser-card'
 import Paginator from '../components/paginator'
+import Button from '../components/button'
 
 /* Utils */
 import { COLORS, SHADOWS } from '../utils/styles_constants'
-import Button from '../components/button'
 
 /* Contracts services */
 import { getFundraisers, totalFundraisers } from '../services/fundraisers'
@@ -112,14 +112,13 @@ const TitleContainer = styled.div`
 
 export default function Home() {
   const [state, setState] = useState({
-    accounts: [],
     fundraisers: null,
     funTotal: null,
     currentPage: 1,
     totalFundraisers: 0
   })
 
-  const FundraisersCards = () => state.accounts.length > 0
+  const FundraisersCards = () => state.fundraisers
     && state.fundraisers.map(fundraiser =>
       <FundraiserCard key={`${fundraiser}`} fundraiser={fundraiser} />
     )
@@ -130,7 +129,7 @@ export default function Home() {
       .then((FUNDRAISERS: Object) => {
         /* TODO: check for page pased by url */
         totalFundraisers()
-          .then(total => setState({ ...state, totalFundraisers: parseInt(total.totalFundraisers), ...FUNDRAISERS }))
+          .then(({ totalFundraisers }) => setState({ ...state, totalFundraisers: parseInt(totalFundraisers), ...FUNDRAISERS }))
           .catch(error => console.error(error))
       })
       .catch(error => console.error(error))
@@ -142,7 +141,7 @@ export default function Home() {
 
         <div className='top-container'>
           <div className='head-container'>
-            <div className='currency-total eth' >{state.totalFundraisers} Fundraisers created <br/> 1,223,549 FUN accumulated</div>
+            <div className='currency-total eth' >{state.totalFundraisers} Fundraisers created <br /> 1,223,549 FUN accumulated</div>
             <TitleContainer>
               <span className='input-container' >
                 <span>🔎</span>
@@ -153,7 +152,7 @@ export default function Home() {
                 <Button className='normal blue' href='get-fun' link >Get some FUN</Button>
               </div>
             </TitleContainer>
-            <div className='currency-total fun' >{/* {state.funTotal} */} 0.0137 ETH <br/> 3,471 FUN available</div>
+            <div className='currency-total fun' >{/* {state.funTotal} */} 0.0137 ETH <br /> 3,471 FUN available</div>
           </div>
         </div>
 

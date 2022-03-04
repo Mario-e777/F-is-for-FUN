@@ -9,6 +9,7 @@ const FormLayoutGrid = styled.div`
   display: grid;
   grid-template-columns: 1fr 35rem 1fr;
   column-gap: 1.5rem;
+  position: relative;
   
   & form {
     width: 100%;
@@ -87,12 +88,28 @@ const FormLayoutGrid = styled.div`
     justify-self: end;
   }
 `
+const FormLayoutContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-bottom: 1.5rem;
 
-export default function FormLayout({ children }) {
+  & p {
+    max-width: 35rem;
+    font-size: 1.2rem;
+    line-height: 1.7rem;
+  }
+`
+
+export default function FormLayout({ children, title, description }) {
   return (
-    <FormLayoutGrid>
-      <Button className="normal back-button transparent" href="/" link >{'← Back'}</Button>
-      {children}
-    </FormLayoutGrid>
+    <FormLayoutContainer>
+      <h2>{title}</h2>
+      <p>{description}</p>
+      <FormLayoutGrid>
+        <Button className="normal back-button transparent" href="/" link >{'← Back'}</Button>
+        {children}
+      </FormLayoutGrid>
+    </FormLayoutContainer>
   )
 }

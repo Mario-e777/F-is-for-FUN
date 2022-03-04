@@ -7,6 +7,7 @@ contract Factory {
   Fundraiser[] private _fundraisers;
   uint256 constant maxLimit = 20;
 
+  mapping(string => Fundraiser) public fundraisersMap;
   event FundraiserCreated(Fundraiser indexed fundraiser);
 
   function fundraisersCount() public view returns(uint256) { 
@@ -15,14 +16,14 @@ contract Factory {
 
   function createFundraiser( 
     string memory name,
-    string memory url,
+    string memory siteURL,
     string memory imageURL,
     string memory description,
     address payable beneficiary
   ) public {
     Fundraiser fundraiser = new Fundraiser(
       name,
-      url,
+      siteURL,
       imageURL,
       description,
       beneficiary,

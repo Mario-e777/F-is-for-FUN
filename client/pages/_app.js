@@ -10,6 +10,9 @@ import SimpleStorageContract from "../contracts/SimpleStorage.json";
 /* Styles */
 import '../styles/globals.css'
 
+/* Contexts */
+import { FundraisersContextProvider, FundraisersContext } from '../contexts/fundraisers'
+
 function MyApp({ Component, pageProps }) {
   const [state, setState] = useState({
     storageValue: 0,
@@ -38,20 +41,11 @@ function MyApp({ Component, pageProps }) {
     };
   }
 
-  const runExample = async () => {
-    const { accounts, contract } = state;
-    await contract.methods.set(5).send({ from: accounts[0] });
-    const response = await contract.methods.get().call();
-    setState({ storageValue: response });
-  }
-
   useEffect(() => {
     initializeWeb3();
   }, []);
-  /* useEffect(() => {
-    state.contract && runExample();
-  }, [state.contract]); */
-  return <Component {...pageProps} />
+
+  return <FundraisersContextProvider> <Component {...pageProps} /> </FundraisersContextProvider>
 }
 
 export default MyApp

@@ -13,7 +13,7 @@ contract Fundraiser is Ownable {
   }
 
   string public name;
-  string public url;
+  string public siteURL;
   string public imageURL;
   string public description;
   address payable public beneficiary;
@@ -27,14 +27,14 @@ contract Fundraiser is Ownable {
 
   constructor(
     string memory _name,
-    string memory _url,
+    string memory _siteURL,
     string memory _imageURL,
     string memory _description,
     address payable _beneficiary,
     address _owner
   ) public { 
     name = _name;
-    url = _url;
+    siteURL = _siteURL;
     imageURL = _imageURL;
     description = _description;
     beneficiary = _beneficiary;
@@ -83,7 +83,7 @@ contract Fundraiser is Ownable {
     emit Withdraw(balance);
   }
 
-  fallback()  external payable {
+  fallback() external payable {
     totalDonations = totalDonations.add(msg.value); 
     donationsCount++;
   }

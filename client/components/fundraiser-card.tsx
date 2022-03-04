@@ -1,9 +1,20 @@
-import { useState, useEffect } from "react"
-import { getWeb3 }  from '../utils/scripts'
-import FundraiserContract from '../contracts/Fundraiser.json'
-import styled from 'styled-components'
+/* React stuff */
+import { useState, useEffect, useContext } from "react"
+
+/* Utils */
 import { COLORS, SHADOWS, TRANSITIONS } from "../utils/styles_constants"
+
+/* Styles */
+import styled from 'styled-components'
+
+/* Components */
 import Button from "./button"
+
+/* Contexts */
+import { FundraisersContext } from '../contexts/fundraisers'
+
+/* Contracts services */
+import { getFundraiserDataByAddress } from "../services/fundraisers"
 
 const FundraiserCardContainer = styled.article`
   background-color: ${COLORS.background_gray};
@@ -54,46 +65,23 @@ const FundraiserCardContainer = styled.article`
 `
 
 export default function FundraiserCard({ fundraiser }) {
+
+  const Context: any = useContext(FundraisersContext)
   const [state, setState] = useState({
-    contract: null,
-    accounts: null,
     name: null,
     description: null,
-    totalDonations: null,
-    donationCount: null,
     imageURL: null,
-    url: null,
   })
 
-  const getFundraiserData = async (fundraiser) => {
+  const getFundraiserData = async fundraiser => {
     try {
-      const web3 = await getWeb3()
-      const accounts = await web3.eth.getAccounts()
-      const instance = new web3.eth.Contract(
-        FundraiserContract.abi,
-        fundraiser,
-      )
-
-      const name = await instance.methods.name().call()
-      const description = await instance.methods.description().call()
-      const totalDonations = await instance.methods.totalDonations().call()
-      const imageURL = await instance.methods.imageURL().call()
-      const url = await instance.methods.url().call()
-
+      const fundraiserData: any = await getFundraiserDataByAddress(fundraiser)
       setState({
         ...state,
-        contract: instance,
-        accounts,
-        name,
-        description,
-        totalDonations,
-        imageURL,
-        url,
+        ...fundraiserData
       })
-      // Placeholder for getting information about each contract
     }
     catch (error) {
-      alert('Failed to load web3, accounts, or contract. Check console for details.');
       console.error(error);
 
     }
@@ -106,12 +94,6 @@ export default function FundraiserCard({ fundraiser }) {
   return (
     <FundraiserCardContainer>
       <span className="image-container" >
-        {/* <Image 
-          alt="The guitarist in the concert."
-          src="https://www.latercera.com/resizer/5MhYjIcc_2tQNdijw9c2EKHH3yk=/900x600/smart/cloudfront-us-east-1.images.arcpublishing.com/copesa/HNDWVAYQCFHXTAE4AUQ3ZNUKIU.jpg"
-          layout="responsive"
-        /> */}
-
         <img src={state.imageURL} alt='' />
       </span>
       <div className="card-info-container" >
@@ -119,9 +101,9 @@ export default function FundraiserCard({ fundraiser }) {
           <h2>{state.name}</h2>
           <p>{state.description}</p>
         </div>
-        <div>
+        <div onClick={(e: any) => {e.target.localName === 'a' && Context.setState({ ...Context.state, fundraiser })}} >
           <p><span>Total donations:<br />$173.43 USD → 0.000134 FUN ✨</span></p>
-          <Button className="full normal yellow" href='fundraiser/new' link>View more</Button>
+          <Button className="full normal yellow" href='fundraiser/detail' link>View more</Button>
         </div>
       </div>
     </FundraiserCardContainer>
