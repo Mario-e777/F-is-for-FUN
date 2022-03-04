@@ -1,16 +1,17 @@
 /* Contracts */
 import FactoryContract from '../contracts/Factory.json'
+import FundraiserContract from '../contracts/Fundraiser.json'
 
 /* Utils */
 import { getWeb3 } from '../utils/scripts'
 
 interface Fundraiser {
-  contract_name: string,
-  contract_website: string,
-  contract_image: string,
-  contract_description: string,
-  contract_beneficiary: string,
-  contract_owner: string,
+  name: string,
+  website: string,
+  image: string,
+  description: string,
+  beneficiary: string,
+  owner: string,
 }
 
 const getAccountsAndContracts = async () => {
@@ -41,7 +42,6 @@ const totalFundraisers = () => {
   })
 }
 
-
 const getFundraisers = ({ getBy, offset }: { getBy: number, offset: number }) => {
   return new Promise(async (resolve, reject) => {
     try {
@@ -66,14 +66,47 @@ const createFundraiser = (fundraiser: Fundraiser) => {
     try {
       const { contract } = await getAccountsAndContracts()
       await contract.methods.createFundraiser(
-        fundraiser.contract_name,
-        fundraiser.contract_website,
-        fundraiser.contract_image,
-        fundraiser.contract_description,
-        fundraiser.contract_beneficiary,
-      ).send({ from: fundraiser.contract_owner })
+        fundraiser.name,
+        fundraiser.website,
+        fundraiser.image,
+        fundraiser.description,
+        fundraiser.beneficiary,
+      ).send({ from: fundraiser.owner })
 
       resolve('Fundraiser created')
+    } catch (error) {
+      reject(error)
+    }
+  })
+}
+
+const getFundraiserDataByAddress = (fundraiser: string) => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      const web3 = await getWeb3()
+      const instance = new web3.eth.Contract(
+        FundraiserContract.abi,
+        fundraiser,
+      )
+
+      const name = await instance.methods.name().call()
+      const siteURL = await instance.methods.siteURL().call()
+      const imageURL = await instance.methods.imageURL().call()
+      const description = await instance.methods.description().call()
+      const beneficiary = await instance.methods.beneficiary().call()
+      const totalDonations = await instance.methods.totalDonations().call()
+      const donationsCount = await instance.methods.donationsCount().call()
+
+      resolve({
+        address: fundraiser,
+        name,
+        siteURL,
+        imageURL,
+        description,
+        beneficiary,
+        totalDonations,
+        donationsCount,
+      })
     } catch (error) {
       reject(error)
     }
@@ -83,5 +116,6 @@ const createFundraiser = (fundraiser: Fundraiser) => {
 export {
   getFundraisers,
   createFundraiser,
-  totalFundraisers
+  totalFundraisers,
+  getFundraiserDataByAddress,
 }

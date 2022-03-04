@@ -1,6 +1,13 @@
+/* React stuff */
 import Head from 'next/head'
+
+/* Styles */
 import styled from 'styled-components'
+
+/* Utils */
 import { COLORS } from '../utils/styles_constants'
+
+/* Components */
 import Button from '../components/button'
 
 const LayoutContainer = styled.div`
