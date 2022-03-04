@@ -30,19 +30,14 @@ contract Fundraiser is Ownable {
     string memory _siteURL,
     string memory _imageURL,
     string memory _description,
-    address payable _beneficiary,
-    address _owner
+    address payable _beneficiary
   ) public { 
     name = _name;
     siteURL = _siteURL;
     imageURL = _imageURL;
     description = _description;
     beneficiary = _beneficiary;
-    _transferOwnership(_owner);
-  }
-
-  function setBeneficiary(address payable _beneficiary) public onlyOwner {
-    beneficiary = _beneficiary;
+    _transferOwnership(_beneficiary);
   }
 
   /* Retrive total donations count from sender */
@@ -77,7 +72,7 @@ contract Fundraiser is Ownable {
     return (values, dates);
   }
 
-  function withdraw() public onlyOwner { 
+  function withdraw() public onlyOwner {
     uint256 balance = address(this).balance;
     beneficiary.transfer(balance);
     emit Withdraw(balance);

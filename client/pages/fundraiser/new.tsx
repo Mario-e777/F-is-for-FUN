@@ -1,8 +1,6 @@
 /* React stuff */
 import React, { FormEvent, useRef } from 'react'
 
-import uniqid from 'uniqid'
-
 /* Components */
 import Layout from "../../components/layout"
 import Button from '../../components/button'
@@ -18,7 +16,6 @@ export default function New() {
   const ContractImage = useRef(null)
   const ContractDescription = useRef(null)
   const ContractBeneficiary = useRef(null)
-  const ContractOwner = useRef(null)
 
   /* Functions */
   const createNewFundraiser = async (e: FormEvent<HTMLFormElement>) => {
@@ -28,8 +25,7 @@ export default function New() {
       website: ContractWebsite.current.value,
       image: ContractImage.current.value,
       description: ContractDescription.current.value,
-      beneficiary: ContractBeneficiary.current.value,
-      owner: ContractOwner.current.value
+      beneficiary: ContractBeneficiary.current.value
     }).then(response => alert(response))
       .catch(error => console.error(error))
   }
@@ -50,7 +46,6 @@ export default function New() {
           <FormInput ref={ContractWebsite} label='Website' placeHolder='https://mysite.com' />
           <FormInput ref={ContractImage} label='Image url' placeHolder='https://mysite.com/image.png' className='full-grid' />
           <FormInput ref={ContractBeneficiary} label='Beneficiary Address' placeHolder='0x0000000...' className='full-grid' />
-          <FormInput ref={ContractOwner} label="Fundraiser owner address" placeHolder='0x0000000...' className='full-grid' />
           <label className='description-container' >
             <p>Description <span>*</span></p>
             <textarea ref={ContractDescription} placeholder="Fundraising to buy much more bacon and prepare with pancakes :p" required />
