@@ -1,9 +1,12 @@
 /* React & next stuff */
-import React from 'react'
 import Link from 'next/link'
 
 /* Modules */
 import styled from 'styled-components'
+import { animated } from 'react-spring'
+
+/* Hooks */
+import useShadow from '../hooks/useShadow';
 
 /* Utils */
 import { SHADOWS } from '../utils/styles_constants'
@@ -55,9 +58,8 @@ const ButtonContainer = styled.span`
     &.mini {
       font-size: 1rem;
     }
-    transition-duration: ${TRANSITIONS.normal};
+    /* transition-duration: ${TRANSITIONS.normal}; */
     white-space: nowrap;
-    box-shadow: ${SHADOWS.small};
     font-family: SofiaProMedium;
 
     &.full {
@@ -65,7 +67,6 @@ const ButtonContainer = styled.span`
     }
 
     &:hover {
-      box-shadow: ${SHADOWS.medium};
       cursor: pointer;
     }
   }
@@ -86,11 +87,30 @@ export default function Button(
     link?: boolean,
     href?: string,
   }) {
+    const [style, trigger] = useShadow({});
+
   return (
     <ButtonContainer className={`${className}`} >
       {link
-        ? <Link href={href}><a className={`${className} button`}>{children}</a></Link>
-        : <button type={type} className={`${className} button`}>{children}</button>}
+        ? <Link href={href}>
+            <animated.a
+              className={`${className} button`}
+              onMouseEnter={() => trigger(true)}
+              onMouseLeave={() => trigger(false)}
+              style={style}
+            >
+              {children}
+            </animated.a>
+          </Link>
+        : <animated.button
+            type={type}
+            className={`${className} button`}
+            onMouseEnter={() => trigger(true)}
+            onMouseLeave={() => trigger(false)}
+            style={style}
+          >
+            {children}
+          </animated.button>}
     </ButtonContainer>
   )
 }

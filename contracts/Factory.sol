@@ -26,8 +26,7 @@ contract Factory {
       siteURL,
       imageURL,
       description,
-      beneficiary,
-      msg.sender
+      beneficiary
     );
     _fundraisers.push(fundraiser);
     emit FundraiserCreated(fundraiser);

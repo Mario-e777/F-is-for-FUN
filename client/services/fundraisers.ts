@@ -11,7 +11,6 @@ interface Fundraiser {
   image: string,
   description: string,
   beneficiary: string,
-  owner: string,
 }
 
 const getAccountsAndContracts = async () => {
@@ -71,7 +70,7 @@ const createFundraiser = (fundraiser: Fundraiser) => {
         fundraiser.image,
         fundraiser.description,
         fundraiser.beneficiary,
-      ).send({ from: fundraiser.owner })
+      ).send({ from: fundraiser.beneficiary })
 
       resolve('Fundraiser created')
     } catch (error) {
