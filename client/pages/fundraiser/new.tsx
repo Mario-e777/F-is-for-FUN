@@ -22,6 +22,9 @@ export default function New() {
   const ContractImage = useRef(null)
   const ContractDescription = useRef(null)
   const ContractBeneficiary = useRef(null)
+  const DonationGoal = useRef(null)
+  const StartAt = useRef(null)
+  const EndAt = useRef(null)
 
   const [state, setState] = useState({
     selectedDay: null,
@@ -32,12 +35,16 @@ export default function New() {
   /* Functions */
   const createNewFundraiser = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
+  
     createFundraiser({
       name: ContractName.current.value,
       website: ContractWebsite.current.value,
       image: ContractImage.current.value,
       description: ContractDescription.current.value,
-      beneficiary: ContractBeneficiary.current.value
+      beneficiary: ContractBeneficiary.current.value,
+      donationGoal: DonationGoal.current.value,
+      startAt: new Date(StartAt.current.state.value).getTime(),
+      endAt: new Date(EndAt.current.state.value).getTime()
     }).then(response => alert(response))
       .catch(error => console.error(error))
   }
@@ -48,9 +55,9 @@ export default function New() {
       {
         props.type === 'date-picker'
           ? <DayPickerInput
-            value={state.selectedDay}
-            onDayChange={handleDayChange}
-            dayPickerProps={{ selectedDays: state.selectedDay }}
+            /* value={state.selectedDay} */
+            ref={ref}
+            /* dayPickerProps={{ selectedDays: state.selectedDay }} */
             formatDate={formatDate}
             parseDate={parseDate}
             placeholder={`${formatDate(new Date())}`}
@@ -61,16 +68,6 @@ export default function New() {
     )
   })
 
-  const handleDayChange = (selectedDay, modifiers, dayPickerInput) => {
-    const input = dayPickerInput.getInput();
-    setState({
-      ...state,
-      selectedDay,
-      isEmpty: !input.value.trim(),
-      isDisabled: modifiers.disabled === true,
-    });
-  }
-
   return (
     <Layout title='New Fundraiser' >
       <FormLayout title='Create fundraiser' description='Create a fundraiser to be sponsored by people, we will deposit all accumulated value to the beneficiary address after the fundraiser ends.' >
@@ -78,10 +75,10 @@ export default function New() {
           <FormInput ref={ContractName} label="Name" placeHolder='The Bacon Pancake Fundraiser' />
           <FormInput ref={ContractWebsite} label='Website' placeHolder='https://mysite.com' />
           <FormInput ref={ContractImage} label='Image url' placeHolder='https://mysite.com/image.png' />
-          <FormInput ref={ContractImage} label='Donation goal' placeHolder='777 FUN' />
+          <FormInput ref={DonationGoal} label='Donation goal' placeHolder='777 FUN' />
           <FormInput ref={ContractBeneficiary} label='Beneficiary Address' placeHolder='0x0000000...' className='full-grid' />
-          <FormInput ref={ContractWebsite} type='date-picker' label='Start date' placeHolder='2022-3-16' />
-          <FormInput ref={ContractWebsite} type='date-picker' label='End date' placeHolder='2022-3-16' />
+          <FormInput ref={StartAt} type='date-picker' label='Start date' placeHolder='2022-3-16' />
+          <FormInput ref={EndAt} type='date-picker' label='End date' placeHolder='2022-3-16' />
 
           <label className='description-container' >
             <p>Description <span>*</span></p>

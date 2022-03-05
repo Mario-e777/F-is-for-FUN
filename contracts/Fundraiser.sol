@@ -20,8 +20,8 @@ contract Fundraiser is Ownable {
   uint256 public totalDonations;
   uint256 public donationsCount;
   uint public donationGoal;
-  uint32 public startAt;
-  uint32 public endAt;
+  uint public startAt;
+  uint public endAt;
 
   event DonationReceived(address indexed donor, uint256 value);
   event Withdraw(uint256 amount);
@@ -34,9 +34,9 @@ contract Fundraiser is Ownable {
     string memory _imageURL,
     string memory _description,
     address payable _beneficiary,
-    uint _donationGoal
-    uint32 _endAt,
-    uint32 _startAt,
+    uint _donationGoal,
+    uint _endAt,
+    uint _startAt
   ) public { 
     name = _name;
     siteURL = _siteURL;

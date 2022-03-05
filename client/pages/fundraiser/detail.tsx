@@ -12,10 +12,11 @@ import { getFundraiserDataByAddress } from "../../services/fundraisers";
 export default function Detail() {
 
   const FUNDRAISER_CONTEXT: any = useContext(FundraisersContext)
-  const [state, setState] = useState({ fundraiser: null })
+  const [state, setState] = useState({ fundraiser: null, name: null })
 
   const getFundraiserData = async (fundraiserAddress: string) => {
     const fundraiser: any = await getFundraiserDataByAddress(fundraiserAddress)
+    console.log(fundraiser)
     setState({ ...state, ...fundraiser })
   }
 
