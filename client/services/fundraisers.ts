@@ -11,6 +11,9 @@ interface Fundraiser {
   image: string,
   description: string,
   beneficiary: string,
+  donationGoal: number,
+  startAt: number,
+  endAt: number,
 }
 
 const getAccountsAndContracts = async () => {
@@ -70,6 +73,9 @@ const createFundraiser = (fundraiser: Fundraiser) => {
         fundraiser.image,
         fundraiser.description,
         fundraiser.beneficiary,
+        fundraiser.donationGoal,
+        fundraiser.startAt,
+        fundraiser.endAt
       ).send({ from: fundraiser.beneficiary })
 
       resolve('Fundraiser created')
@@ -95,6 +101,9 @@ const getFundraiserDataByAddress = (fundraiser: string) => {
       const beneficiary = await instance.methods.beneficiary().call()
       const totalDonations = await instance.methods.totalDonations().call()
       const donationsCount = await instance.methods.donationsCount().call()
+      const donationGoal = await instance.methods.donationGoal().call()
+      const startAt = await instance.methods.startAt().call()
+      const endAt = await instance.methods.endAt().call()
 
       resolve({
         address: fundraiser,
@@ -105,6 +114,9 @@ const getFundraiserDataByAddress = (fundraiser: string) => {
         beneficiary,
         totalDonations,
         donationsCount,
+        donationGoal,
+        startAt,
+        endAt
       })
     } catch (error) {
       reject(error)

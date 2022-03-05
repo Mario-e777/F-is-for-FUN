@@ -21,8 +21,8 @@ contract Factory {
     string memory description,
     address payable beneficiary,
     uint donationGoal,
-    uint32 startAt,
-    uint32 endAt
+    uint startAt,
+    uint endAt
   ) public {
     Fundraiser fundraiser = new Fundraiser(
       name,
