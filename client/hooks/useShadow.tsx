@@ -7,18 +7,19 @@ import { SHADOWS, TRANSITIONS } from '../utils/styles_constants'
 
 function useShadow({
   springConfig = {
-    duration: TRANSITIONS.normal,
+    mass: 1.1, tension: 240, friction: 13
   },
 }) {
   const [isHovered, setIsHovered] = useState(false)
-  const style = useSpring({
-    reverse: isHovered,
-    from: { boxShadow: SHADOWS.medium },
-    to: { boxShadow: SHADOWS.small },
+  const shadowStyle = useSpring({
+    to: { 
+      boxShadow: isHovered ? SHADOWS.medium : SHADOWS.small,
+      transform: isHovered ? 'scale(1.00666)' : 'scale(1)'
+    },
     config: springConfig,
   })
 
-  const trigger = type => setIsHovered(type);
-  return [style, trigger]
+  const triggerShadow = type => setIsHovered(type);
+  return [shadowStyle, triggerShadow]
 }
 export default useShadow
