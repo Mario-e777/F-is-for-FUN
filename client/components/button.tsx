@@ -18,6 +18,7 @@ const ButtonContainer = styled.span`
   width: fit-content;
   /* height: fit-content; */
   display: block;
+  border-radius: 3px;
   
   &.full {
     width: 100%;
@@ -44,6 +45,7 @@ const ButtonContainer = styled.span`
   }
 
   &> a, button {
+    border-radius: 3px;
     width: fit-content;
     display: flex;
     align-items: center;
@@ -51,7 +53,7 @@ const ButtonContainer = styled.span`
     padding: 1.1rem 1.3rem;
     color: ${COLORS.black};
     border: 1px solid ${COLORS.black};
-    border-radius: 3px;
+
     &.normal {
       font-size: 1.1rem;
     }
@@ -87,7 +89,7 @@ export default function Button(
     link?: boolean,
     href?: string,
   }) {
-    const [style, trigger] = useShadow({});
+    const [shadowStyle, triggerShadow] = useShadow({});
 
   return (
     <ButtonContainer className={`${className}`} >
@@ -95,9 +97,9 @@ export default function Button(
         ? <Link href={href}>
             <animated.a
               className={`${className} button`}
-              onMouseEnter={() => trigger(true)}
-              onMouseLeave={() => trigger(false)}
-              style={style}
+              onMouseEnter={() => triggerShadow(true)}
+              onMouseLeave={() => triggerShadow(false)}
+              style={shadowStyle}
             >
               {children}
             </animated.a>
@@ -105,9 +107,9 @@ export default function Button(
         : <animated.button
             type={type}
             className={`${className} button`}
-            onMouseEnter={() => trigger(true)}
-            onMouseLeave={() => trigger(false)}
-            style={style}
+            onMouseEnter={() => triggerShadow(true)}
+            onMouseLeave={() => triggerShadow(false)}
+            style={shadowStyle}
           >
             {children}
           </animated.button>}
