@@ -1,5 +1,9 @@
 /* React stuff */
-import React, { FormEvent, useRef } from 'react'
+import React, { FormEvent, useRef, useState } from 'react'
+
+/* Modules */
+import DayPickerInput from 'react-day-picker/DayPickerInput';
+import { formatDate, parseDate } from 'react-day-picker/moment';
 
 /* Components */
 import Layout from "../../components/layout"
@@ -9,6 +13,8 @@ import FormLayout from '../../components/form-layout'
 /* Contracts services */
 import { createFundraiser } from '../../services/fundraisers'
 
+/* Styles */
+import 'react-day-picker/lib/style.css';
 
 export default function New() {
   const ContractName = useRef(null)
@@ -16,6 +22,12 @@ export default function New() {
   const ContractImage = useRef(null)
   const ContractDescription = useRef(null)
   const ContractBeneficiary = useRef(null)
+
+  const [state, setState] = useState({
+    selectedDay: null,
+    isDisabled: null,
+    isEmpty: null
+  })
 
   /* Functions */
   const createNewFundraiser = async (e: FormEvent<HTMLFormElement>) => {
@@ -33,10 +45,31 @@ export default function New() {
   const FormInput = React.forwardRef(function FormInput(props: any, ref: React.MutableRefObject<any>) {
     return (<label className={props.className} >
       <p>{props.label} <span>*</span></p>
-      <input ref={ref} placeholder={props.placeHolder} type='text' required />
+      {
+        props.type === 'date-picker'
+          ? <DayPickerInput
+            value={state.selectedDay}
+            onDayChange={handleDayChange}
+            dayPickerProps={{ selectedDays: state.selectedDay }}
+            formatDate={formatDate}
+            parseDate={parseDate}
+            placeholder={`${formatDate(new Date())}`}
+          />
+          : <input ref={ref} placeholder={props.placeHolder} type='text' required />
+      }
     </label>
     )
-  });
+  })
+
+  const handleDayChange = (selectedDay, modifiers, dayPickerInput) => {
+    const input = dayPickerInput.getInput();
+    setState({
+      ...state,
+      selectedDay,
+      isEmpty: !input.value.trim(),
+      isDisabled: modifiers.disabled === true,
+    });
+  }
 
   return (
     <Layout title='New Fundraiser' >
@@ -44,8 +77,12 @@ export default function New() {
         <form onSubmit={e => createNewFundraiser(e)} >
           <FormInput ref={ContractName} label="Name" placeHolder='The Bacon Pancake Fundraiser' />
           <FormInput ref={ContractWebsite} label='Website' placeHolder='https://mysite.com' />
-          <FormInput ref={ContractImage} label='Image url' placeHolder='https://mysite.com/image.png' className='full-grid' />
+          <FormInput ref={ContractImage} label='Image url' placeHolder='https://mysite.com/image.png' />
+          <FormInput ref={ContractImage} label='Donation goal' placeHolder='777 FUN' />
           <FormInput ref={ContractBeneficiary} label='Beneficiary Address' placeHolder='0x0000000...' className='full-grid' />
+          <FormInput ref={ContractWebsite} type='date-picker' label='Start date' placeHolder='2022-3-16' />
+          <FormInput ref={ContractWebsite} type='date-picker' label='End date' placeHolder='2022-3-16' />
+
           <label className='description-container' >
             <p>Description <span>*</span></p>
             <textarea ref={ContractDescription} placeholder="Fundraising to buy much more bacon and prepare with pancakes :p" required />
@@ -54,6 +91,6 @@ export default function New() {
           <Button className='full normal green' type='submit' >Create fundraiser</Button>
         </form>
       </FormLayout>
-    </Layout>
+    </Layout >
   )
 }

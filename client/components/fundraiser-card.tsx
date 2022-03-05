@@ -2,7 +2,7 @@
 import { useState, useEffect, useContext } from "react"
 
 /* Utils */
-import { COLORS, SHADOWS, TRANSITIONS } from "../utils/styles_constants"
+import { COLORS, SHADOWS } from "../utils/styles_constants"
 
 /* Styles */
 import styled from 'styled-components'
@@ -22,14 +22,12 @@ const FundraiserCardContainer = styled.article`
   color: ${COLORS.black};
   border: 1px solid ${COLORS.black};
   box-shadow: ${SHADOWS.small};
-  transition-duration: ${TRANSITIONS.normal};
   font-size: 1.1rem;
   display: grid;
   grid-template-rows: 17rem 1fr;
   
   & .card-info-container {
     padding: 1.5rem;
-    /* gap: 1.5rem; */
     flex-wrap: wrap;
     display: flex;
     flex-direction: column;

@@ -19,14 +19,20 @@ contract Factory {
     string memory siteURL,
     string memory imageURL,
     string memory description,
-    address payable beneficiary
+    address payable beneficiary,
+    uint donationGoal,
+    uint32 startAt,
+    uint32 endAt
   ) public {
     Fundraiser fundraiser = new Fundraiser(
       name,
       siteURL,
       imageURL,
       description,
-      beneficiary
+      beneficiary,
+      donationGoal,
+      startAt,
+      endAt
     );
     _fundraisers.push(fundraiser);
     emit FundraiserCreated(fundraiser);

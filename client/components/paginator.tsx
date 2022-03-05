@@ -24,8 +24,10 @@ const NavContainer = styled.nav`
     opacity: 0.5;
     cursor: default;
   }
-
+  
   & .page-number {
+    transition-duration: ${TRANSITIONS.normal};
+
     &:hover {
       opacity: 1;
       cursor: pointer;
@@ -35,7 +37,6 @@ const NavContainer = styled.nav`
 
   & a {
     opacity: 0.5;
-    transition-duration: ${TRANSITIONS.normal};
 
     &.selected {
       opacity: 1;
@@ -99,7 +100,7 @@ export default function Paginator({ pageSetState, pageState }) {
 
   useEffect(() => {
     totalFundraisers()
-      .then(total =>
+      .then((total: any) =>
         setState({
           totalPages: Math.ceil(parseInt(total.totalFundraisers) / 6)
         })

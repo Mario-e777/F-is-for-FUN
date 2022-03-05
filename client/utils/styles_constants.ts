@@ -20,7 +20,7 @@ const SHADOWS = {
 }
 
 const TRANSITIONS = {
-  normal: 157,
+  normal: '157ms',
 }
 
 export {

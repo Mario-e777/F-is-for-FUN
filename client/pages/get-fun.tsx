@@ -168,7 +168,7 @@ export default function GetFun() {
               <div className="price-convertor-container" >
                 <p>You'll get</p>
                 <div>
-                  <input placeholder='777.00 FUN' type='number' />
+                  <input placeholder='777 FUN' type='number' />
                 </div>
               </div>
             </div>

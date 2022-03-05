@@ -1,5 +1,4 @@
 import styled from "styled-components"
-import { TRANSITIONS } from '../utils/styles_constants'
 import { COLORS, SHADOWS } from '../utils/styles_constants'
 import Button from '../components/button'
 
@@ -18,10 +17,30 @@ const FormLayoutGrid = styled.div`
     grid-template-columns: repeat(2, 1fr);
     gap: 1.5rem;
     justify-self: center;
-
-    & label {
+    
+    
+    & label, & .DayPickerInput {
       font-size: 1.1rem;
       color: ${COLORS.black};
+      width: 100%;
+      
+      .DayPicker-Day--selected {
+        background-color: ${COLORS.blue_light};
+        color: ${COLORS.black};
+      }
+      
+      .DayPicker-wrapper {
+        background-color: ${COLORS.background_gray};
+        border: 1px solid ${COLORS.black};
+        border-radius: 5px;
+        width: calc(100% - 2px);
+      }
+      
+      .DayPickerInput-Overlay {
+        width: calc(100% - 2px);
+        border-radius: 5px;
+      }
+
       & p {
         margin-bottom: 0.4rem;
         color: ${COLORS.black};
@@ -38,35 +57,7 @@ const FormLayoutGrid = styled.div`
         border-radius: 5px;
         border: 1px solid ${COLORS.black};
         font-family: SofiaProRegular;
-      }
-    }
-
-    & .green {
-      background-color: ${COLORS.green_light};
-    }
-    & .blue {
-      background-color: ${COLORS.blue_light};
-    }
-    & .red {
-      background-color: ${COLORS.red_light};
-    }
-
-    &> a {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 1.1rem 1.3rem;
-      color: ${COLORS.black};
-      border: 1px solid ${COLORS.black};
-      border-radius: 3px;
-      font-size: 1.1rem;
-      transition-duration: ${TRANSITIONS.normal};
-      white-space: nowrap;
-      box-shadow: ${SHADOWS.small};
-      font-family: SofiaProMedium;
-
-      &:hover {
-        box-shadow: ${SHADOWS.medium};
+        background-color: ${COLORS.background_gray};
       }
     }
 
@@ -93,6 +84,7 @@ const FormLayoutContainer = styled.div`
   flex-direction: column;
   align-items: center;
   padding-bottom: 1.5rem;
+  color: ${COLORS.black};
 
   & p {
     max-width: 35rem;
