@@ -1,4 +1,5 @@
 import Web3 from "web3"
+import { useRouter } from "next/router";
 
 const getWeb3 = () => {
   return new Promise(async (resolve, reject) => {
@@ -8,12 +9,12 @@ const getWeb3 = () => {
       // detect Metamask account change
 
       window.ethereum.on('accountsChanged', function (accounts) {
-        console.log('accountsChanges',accounts);
+        console.log('accountsChanges', accounts);
       });
 
       // detect Network account change
-      window.ethereum.on('networkChanged', function(networkId){
-        console.log('networkChanged',networkId);
+      window.ethereum.on('networkChanged', function (networkId) {
+        console.log('networkChanged', networkId);
       });
 
       try {

@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 /* React stuff */
 import { useState, useEffect, useContext } from "react"
 
@@ -69,6 +70,7 @@ export default function FundraiserCard({ fundraiser }) {
     name: null,
     description: null,
     imageURL: null,
+    address: null
   })
 
   const getFundraiserData = async fundraiser => {
@@ -81,7 +83,6 @@ export default function FundraiserCard({ fundraiser }) {
     }
     catch (error) {
       console.error(error);
-
     }
   }
 
@@ -92,7 +93,7 @@ export default function FundraiserCard({ fundraiser }) {
   return (
     <FundraiserCardContainer>
       <span className="image-container" >
-        <img src={state.imageURL} alt='' />
+        <img src={state.imageURL} alt='Fundraiser image' />
       </span>
       <div className="card-info-container" >
         <div>
@@ -101,7 +102,7 @@ export default function FundraiserCard({ fundraiser }) {
         </div>
         <div onClick={(e: any) => {e.target.localName === 'a' && Context.setState({ ...Context.state, fundraiser })}} >
           <p><span>Total donations:<br />$173.43 USD → 0.000134 FUN ✨</span></p>
-          <Button className="full normal yellow" href='fundraiser/detail' link>View more</Button>
+          <Button className="full normal yellow" href={`fundraiser/detail?fundraiser=${state.address}`} link>View more</Button>
         </div>
       </div>
     </FundraiserCardContainer>

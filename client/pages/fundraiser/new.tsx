@@ -26,12 +26,6 @@ export default function New() {
   const StartAt = useRef(null)
   const EndAt = useRef(null)
 
-  const [state, setState] = useState({
-    selectedDay: null,
-    isDisabled: null,
-    isEmpty: null
-  })
-
   /* Functions */
   const createNewFundraiser = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
