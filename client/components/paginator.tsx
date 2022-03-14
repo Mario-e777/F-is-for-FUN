@@ -56,23 +56,25 @@ const NavContainer = styled.nav`
   }
 `
 
-export default function Paginator({ pageSetState, pageState }) {
-
+export default function Paginator({ parentState, parentSetState }) {
   const [state, setState] = useState({
     totalPages: 1
   })
 
   /* Functions */
-  const getPageOptions = () => {
-    const pageOptions = []
-    let limitPaginatitonItems = pageState.currentPage >= 3 ? pageState.currentPage + 1 : 3
+  const getTotalPages = () => {
+    const PAGES_TO_SHOW = []
+    let limitPaginatitonItems = parentState.currentPage >= 3 ? parentState.currentPage + 1 : 3
 
     for (let i = 1; i <= state.totalPages; i++) {
       if (limitPaginatitonItems === 0 && i != state.totalPages) continue;
-      pageOptions.push(
+      PAGES_TO_SHOW.push(
         <>
           <Link href={`?page=${i}`} >
-            <a className={classNames({ selected: pageState.currentPage === i, "page-number": true })} >{i}</a>
+            <a className={classNames({
+              selected: parentState.currentPage === i,
+              "page-number": true
+            })}>{i}</a>
           </Link>
           {i !== state.totalPages && <span onClick={e => e.stopPropagation()} >|</span>}
         </>
@@ -80,23 +82,41 @@ export default function Paginator({ pageSetState, pageState }) {
       limitPaginatitonItems--
     }
 
-    pageState.currentPage >= 3 && pageOptions.splice(0, pageOptions.length - 4)
-    return pageOptions
+    parentState.currentPage >= 3 && PAGES_TO_SHOW.splice(0, PAGES_TO_SHOW.length - 4)
+    return PAGES_TO_SHOW
   }
 
   const handleStepPage = (type: string, e: React.MouseEvent<HTMLSpanElement, MouseEvent>) => {
     e.stopPropagation()
-    pageSetState({
-      ...pageState,
-      currentPage: type === 'next'
-        ? (parseInt(pageState.currentPage) + 1 > state.totalPages) ? parseInt(pageState.currentPage) : parseInt(pageState.currentPage) + 1
-        : (parseInt(pageState.currentPage) - 1 < 1) ? parseInt(pageState.currentPage) : parseInt(pageState.currentPage) - 1
+    const PREV_PAGE = parseInt(parentState.currentPage) - 1
+    const CURRENT_PAGE = parseInt(parentState.currentPage)
+    const NEXT_PAGE = parseInt(parentState.currentPage) + 1
+
+    parentSetState({
+      ...parentState,
+      currentPage: type === 'Next'
+        ? (NEXT_PAGE > state.totalPages) ? CURRENT_PAGE : NEXT_PAGE
+        : (PREV_PAGE < 1) ? CURRENT_PAGE : PREV_PAGE
     })
   }
 
   const selectPaginatorOptions = (e: React.MouseEvent<HTMLElement, MouseEvent>) => {
-    parseInt(Object.values(e.target)[1].children) && pageSetState({ ...pageState, currentPage: parseInt(Object.values(e.target)[1].children) })
+    parseInt(Object.values(e.target)[1].children)
+      && parentSetState({
+        ...parentState,
+        currentPage: parseInt(Object.values(e.target)[1].children)
+      })
   }
+
+  const stepButton = ({ to, activeCondition }) => (
+    <span
+      className={classNames({
+        deactive: parentState.currentPage === activeCondition,
+        "page-number": true
+      })}
+      onClick={e => handleStepPage(to, e)}
+    >{to}</span>
+  );
 
   useEffect(() => {
     totalFundraisers()
@@ -109,25 +129,9 @@ export default function Paginator({ pageSetState, pageState }) {
 
   return (
     <NavContainer onClick={e => selectPaginatorOptions(e)} >
-      <span
-        className={classNames({
-          deactive: pageState.currentPage === 1,
-          "page-number": true
-        })}
-        onClick={e => handleStepPage('prev', e)}
-      >
-        {'Prev'}
-      </span>
-      {getPageOptions()}
-      <span
-        className={classNames({
-          deactive: pageState.currentPage === state.totalPages,
-          "page-number": true
-        })}
-        onClick={e => handleStepPage('next', e)}
-      >
-        {'Next'}
-      </span>
+      {stepButton({ to: 'Prev', activeCondition: 1 })}
+      {getTotalPages()}
+      {stepButton({ to: 'Next', activeCondition: state.totalPages })}
     </NavContainer>
   )
 }

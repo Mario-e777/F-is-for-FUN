@@ -1,5 +1,7 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* React & next stuff */
 import { useState, useEffect } from 'react'
+import { useRouter } from "next/router"
 
 /* Modules */
 import styled from 'styled-components'
@@ -111,6 +113,8 @@ const TitleContainer = styled.div`
 `
 
 export default function Home() {
+  const { query } = useRouter()
+
   const [state, setState] = useState({
     fundraisers: null,
     funTotal: null,
@@ -125,15 +129,23 @@ export default function Home() {
 
   /* Effects */
   useEffect(() => {
+    const CURRENT_PAGE = query.page ? parseInt(query.page) : state.currentPage
+    getFundraisers({ getBy: 6, offset: ((CURRENT_PAGE * 6) - 6) })
+      .then((FUNDRAISERS: Object) => {
+        totalFundraisers()
+          .then(({ totalFundraisers }) => setState({ ...state, ...FUNDRAISERS, totalFundraisers: parseInt(totalFundraisers), currentPage: CURRENT_PAGE }))
+          .catch(error => console.error(error))
+      }).catch(error => console.error(error))
+  }, [query.page])
+
+  useEffect(() => {
     getFundraisers({ getBy: 6, offset: ((state.currentPage * 6) - 6) })
       .then((FUNDRAISERS: Object) => {
-        /* TODO: check for page pased by url */
         totalFundraisers()
-          .then(({ totalFundraisers }) => setState({ ...state, totalFundraisers: parseInt(totalFundraisers), ...FUNDRAISERS }))
+          .then(({ totalFundraisers }) => setState({ ...state, ...FUNDRAISERS, totalFundraisers: parseInt(totalFundraisers) }))
           .catch(error => console.error(error))
-      })
-      .catch(error => console.error(error))
-  }, [state.currentPage,])
+      }).catch(error => console.error(error))
+  }, [state.currentPage])
 
   return (
     <Layout title={'Home'} >
@@ -156,7 +168,7 @@ export default function Home() {
           </div>
         </div>
 
-        <Paginator pageState={state} pageSetState={setState} />
+        <Paginator parentState={state} parentSetState={setState} />
 
         <div className='cards-container'>
           {FundraisersCards()}
