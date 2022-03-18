@@ -21,10 +21,11 @@ const SHADOWS = {
 
 const TRANSITIONS = {
   normal: '157ms',
+  slow: '461ms',
 }
 
 export {
-  COLORS,
+  COLORS, 
   SHADOWS,
   TRANSITIONS
 }

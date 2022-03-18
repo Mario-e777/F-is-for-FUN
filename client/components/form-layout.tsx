@@ -10,7 +10,7 @@ const FormLayoutGrid = styled.div`
   column-gap: 1.5rem;
   position: relative;
   
-  & form {
+  & .form {
     width: 100%;
     max-width: 35rem;
     display: grid;
@@ -77,6 +77,8 @@ const FormLayoutGrid = styled.div`
 
   & .back-button {
     justify-self: end;
+    position: sticky;
+    top: 1.2rem;
   }
 `
 const FormLayoutContainer = styled.div`
