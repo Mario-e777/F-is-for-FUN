@@ -5,7 +5,7 @@ import { useContext, useEffect, useState } from "react"
 import { useRouter } from "next/router"
 
 /* Components */
-import FormLayout from "../../components/form-layout"
+import FormLayout from "../../components/form/layout"
 import Layout from "../../components/layout"
 
 /* Context */

@@ -9,7 +9,7 @@ import { animated } from 'react-spring'
 import useShadow from '../hooks/useShadow';
 
 /* Utils */
-import { COLORS } from '../utils/styles_constants'
+import { COLORS, TRANSITIONS } from '../utils/styles_constants'
 
 const ButtonContainer = styled.span`
   height: fit-content;
@@ -24,10 +24,26 @@ const ButtonContainer = styled.span`
   & .yellow { background-color: ${COLORS.yellow_light}; }
   & .red { background-color: ${COLORS.red_light}; }
 
+  & .deactive {
+    position: relative;
+    z-index: -1;
+    opacity: 0;
+    transition-duration: ${TRANSITIONS.slow};
+  }
+  & .active {
+    z-index: 0;
+    opacity: 1;
+    transition-duration: ${TRANSITIONS.slow};
+  }
+
+  & .blocked {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+
   & .transparent {
     background: linear-gradient(215deg, #fad0c47b 0%, #f1a7f176 74%) 0% 0% no-repeat padding-box padding-box transparent;
     backdrop-filter: blur(6px);
-    font-size: 1rem;
   }
 
   &> a, button {
@@ -41,8 +57,8 @@ const ButtonContainer = styled.span`
     border: 1px solid ${COLORS.black};
     white-space: nowrap;
     font-family: SofiaProMedium;
+    font-size: 1.1rem;
     cursor: pointer;
-    &.normal { font-size: 1.1rem; }
     &.mini { font-size: 1rem; }
     &.full { width: 100%; }
   }
@@ -54,18 +70,22 @@ export default function Button(
     href,
     children,
     type,
-    className
+    className,
+    styles,
+    onClick,
   }: {
     children: string
     className?: string,
     type?: string,
     link?: boolean,
     href?: string,
+    styles?: Object,
+    onClick?: Function
   }) {
   const [shadowStyle, triggerShadow] = useShadow({});
 
   return (
-    <ButtonContainer className={`${className}`} >
+    <ButtonContainer onClick={() => onClick && onClick()} style={styles} className={`${className}`} >
       {link
         ? <Link href={href}>
           <animated.a

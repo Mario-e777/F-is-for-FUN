@@ -58,7 +58,8 @@ const NavContainer = styled.nav`
 
 export default function Paginator({ parentState, parentSetState }) {
   const [state, setState] = useState({
-    totalPages: 1
+    totalPages: 1,
+    paginatorOptions: ['Prev', 'Next']
   })
 
   /* Functions */
@@ -86,7 +87,7 @@ export default function Paginator({ parentState, parentSetState }) {
     return PAGES_TO_SHOW
   }
 
-  const handleStepPage = (type: string, e: React.MouseEvent<HTMLSpanElement, MouseEvent>) => {
+  const handleStepPage = (stepTo: string, e: React.MouseEvent<HTMLSpanElement, MouseEvent>) => {
     e.stopPropagation()
     const PREV_PAGE = parseInt(parentState.currentPage) - 1
     const CURRENT_PAGE = parseInt(parentState.currentPage)
@@ -94,13 +95,14 @@ export default function Paginator({ parentState, parentSetState }) {
 
     parentSetState({
       ...parentState,
-      currentPage: type === 'Next'
+      currentPage: stepTo === state.paginatorOptions[1]
         ? (NEXT_PAGE > state.totalPages) ? CURRENT_PAGE : NEXT_PAGE
         : (PREV_PAGE < 1) ? CURRENT_PAGE : PREV_PAGE
     })
   }
 
   const selectPaginatorOptions = (e: React.MouseEvent<HTMLElement, MouseEvent>) => {
+    /* Only clicked number */
     parseInt(Object.values(e.target)[1].children)
       && parentSetState({
         ...parentState,
@@ -108,10 +110,10 @@ export default function Paginator({ parentState, parentSetState }) {
       })
   }
 
-  const stepButton = ({ to, activeCondition }) => (
+  const stepButton = ({ to, deactiveCondition }) => (
     <span
       className={classNames({
-        deactive: parentState.currentPage === activeCondition,
+        deactive: parentState.currentPage === deactiveCondition,
         "page-number": true
       })}
       onClick={e => handleStepPage(to, e)}
@@ -122,6 +124,7 @@ export default function Paginator({ parentState, parentSetState }) {
     totalFundraisers()
       .then((total: any) =>
         setState({
+          ...state,
           totalPages: Math.ceil(parseInt(total.totalFundraisers) / 6)
         })
       )
@@ -129,9 +132,9 @@ export default function Paginator({ parentState, parentSetState }) {
 
   return (
     <NavContainer onClick={e => selectPaginatorOptions(e)} >
-      {stepButton({ to: 'Prev', activeCondition: 1 })}
+      {stepButton({ to: state.paginatorOptions[0], deactiveCondition: 1 })}
       {getTotalPages()}
-      {stepButton({ to: 'Next', activeCondition: state.totalPages })}
+      {stepButton({ to: state.paginatorOptions[1], deactiveCondition: state.totalPages })}
     </NavContainer>
   )
 }
