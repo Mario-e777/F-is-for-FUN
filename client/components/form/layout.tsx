@@ -1,6 +1,6 @@
 import styled from "styled-components"
-import { COLORS, SHADOWS } from '../utils/styles_constants'
-import Button from '../components/button'
+import { COLORS, SHADOWS } from '../../utils/styles_constants'
+import Button from '../button'
 
 const FormLayoutGrid = styled.div`
   z-index: +1;
@@ -10,7 +10,7 @@ const FormLayoutGrid = styled.div`
   column-gap: 1.5rem;
   position: relative;
   
-  & form {
+  & .formContainer {
     width: 100%;
     max-width: 35rem;
     display: grid;
@@ -67,8 +67,9 @@ const FormLayoutGrid = styled.div`
 
     & .description-container {
       grid-column: 1/3;
-
+      
       & textarea {
+        line-height: 1.4rem;
         height: 11rem;
         resize: none;
       }
@@ -77,6 +78,8 @@ const FormLayoutGrid = styled.div`
 
   & .back-button {
     justify-self: end;
+    position: sticky;
+    top: 1.2rem;
   }
 `
 const FormLayoutContainer = styled.div`
@@ -99,7 +102,7 @@ export default function FormLayout({ children, title, description }) {
       <h2>{title}</h2>
       <p>{description}</p>
       <FormLayoutGrid>
-        <Button className="normal back-button transparent" href="/" link >{'← Back'}</Button>
+        <Button className="back-button transparent" href="/" link >{'← Back'}</Button>
         {children}
       </FormLayoutGrid>
     </FormLayoutContainer>

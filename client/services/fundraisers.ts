@@ -11,9 +11,14 @@ interface Fundraiser {
   image: string,
   description: string,
   beneficiary: string,
-  donationGoal: number,
-  startAt: number,
-  endAt: number,
+}
+
+const getActiveFundraisersGoals = () => {
+  return new Promise((resolve, reject) => {
+    resolve({
+      activeGoals: [{},{},{},{}]
+    })
+  })
 }
 
 const getAccountsAndContracts = async () => {
@@ -73,9 +78,6 @@ const createFundraiser = (fundraiser: Fundraiser) => {
         fundraiser.image,
         fundraiser.description,
         fundraiser.beneficiary,
-        fundraiser.donationGoal,
-        fundraiser.startAt,
-        fundraiser.endAt
       ).send({ from: fundraiser.beneficiary })
 
       resolve('Fundraiser created')
@@ -129,4 +131,5 @@ export {
   createFundraiser,
   totalFundraisers,
   getFundraiserDataByAddress,
+  getActiveFundraisersGoals
 }

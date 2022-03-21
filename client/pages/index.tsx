@@ -63,7 +63,7 @@ const HomeContainer = styled.section`
   }
 `
 
-const TitleContainer = styled.div`
+const SearchContainer = styled.div`
   grid-column: 2/3;
   display: flex;
   align-items: center;
@@ -119,7 +119,8 @@ export default function Home() {
     fundraisers: null,
     funTotal: null,
     currentPage: 1,
-    totalFundraisers: 0
+    totalFundraisers: 0,
+    limitFundraisers: 6
   })
 
   const FundraisersCards = () => state.fundraisers
@@ -127,22 +128,40 @@ export default function Home() {
       <FundraiserCard key={`${fundraiser}`} fundraiser={fundraiser} />
     )
 
+  const getPageOffset = (page: number) => (page * state.limitFundraisers) - state.limitFundraisers
+
   /* Effects */
   useEffect(() => {
-    const CURRENT_PAGE = query.page ? parseInt(query.page) : state.currentPage
-    getFundraisers({ getBy: 6, offset: ((CURRENT_PAGE * 6) - 6) })
+    const QUERY_PAGE = query.page ? parseInt(query.page[0]) : state.currentPage
+
+    getFundraisers({ 
+      getBy: state.limitFundraisers,
+      offset: getPageOffset(QUERY_PAGE)
+    })
       .then((FUNDRAISERS: Object) => {
         totalFundraisers()
-          .then(({ totalFundraisers }) => setState({ ...state, ...FUNDRAISERS, totalFundraisers: parseInt(totalFundraisers), currentPage: CURRENT_PAGE }))
+          .then(({ totalFundraisers }) => setState({
+            ...state,
+            ...FUNDRAISERS,
+            totalFundraisers: parseInt(totalFundraisers),
+            currentPage: QUERY_PAGE
+          }))
           .catch(error => console.error(error))
       }).catch(error => console.error(error))
   }, [query.page])
 
   useEffect(() => {
-    getFundraisers({ getBy: 6, offset: ((state.currentPage * 6) - 6) })
+    getFundraisers({ 
+      getBy: state.limitFundraisers,
+      offset: getPageOffset(state.currentPage)
+    })
       .then((FUNDRAISERS: Object) => {
         totalFundraisers()
-          .then(({ totalFundraisers }) => setState({ ...state, ...FUNDRAISERS, totalFundraisers: parseInt(totalFundraisers) }))
+          .then(({ totalFundraisers }) => setState({
+            ...state,
+            ...FUNDRAISERS,
+            totalFundraisers: parseInt(totalFundraisers)
+          }))
           .catch(error => console.error(error))
       }).catch(error => console.error(error))
   }, [state.currentPage])
@@ -153,18 +172,30 @@ export default function Home() {
 
         <div className='top-container'>
           <div className='head-container'>
-            <div className='currency-total eth' >{state.totalFundraisers} Fundraisers created <br /> 1,223,549 FUN accumulated</div>
-            <TitleContainer>
+            <div className='currency-total eth' >
+              {state.totalFundraisers} Fundraisers created
+              <br />
+              1,223,549 FUN accumulated
+            </div>
+
+            <SearchContainer>
               <span className='input-container' >
                 <span>🔎</span>
                 <input type='text' placeholder='Search fundraiser' />
               </span>
               <div className='buttons-container' >
-                <Button className='normal green' href='fundraiser/new' link >Create fundraiser</Button>
-                <Button className='normal blue' href='get-fun' link >Get some FUN</Button>
+                <Button className='green' href='fundraiser/new' link >Create fundraiser</Button>
+                <Button className='blue' href='get-fun' link >Get some FUN</Button>
               </div>
-            </TitleContainer>
-            <div className='currency-total fun' >{/* {state.funTotal} */} 0.0137 ETH <br /> 3,471 FUN available</div>
+            </SearchContainer>
+
+            <div className='currency-total fun' >
+              {/* {state.funTotal} */}
+              0.0137 ETH
+              <br />
+              3,471 FUN available
+            </div>
+
           </div>
         </div>
 

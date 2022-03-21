@@ -39,7 +39,6 @@ const LayoutContainer = styled.div`
       top: 1.2rem;
       display: grid;
       grid-template-columns: repeat(2, 1fr);
-      /* background-color: yellowgreen; */
       padding: 0 1.2rem;
       z-index: 0;
 
@@ -47,7 +46,6 @@ const LayoutContainer = styled.div`
         grid-column: 2/3;
         grid-row: 1/2;
         justify-self: end;
-        /* align-self: center; */
         display: flex;
         column-gap: 1rem;
       }
@@ -90,14 +88,13 @@ export default function Layout({ children, title }) {
         {children}
         <header className='menu-buttons-container' >
           <div className='right-buttons-container' >
-            <Button className='menu-button transparent' >About this project</Button>
+            <Button className='mini transparent' >About this project</Button>
           </div>
         </header>
       </main>
 
-      <footer>
-        {/* <p>Footer</p> */}
-      </footer>
+      {/* <footer>
+      </footer> */}
     </LayoutContainer>
   )
 }

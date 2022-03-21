@@ -6,7 +6,7 @@ import styled from 'styled-components'
 
 /* Components */
 import Button from "../components/button"
-import FormLayout from "../components/form-layout"
+import FormLayout from "../components/form/layout"
 
 /* Utils */
 import { COLORS, SHADOWS } from "../utils/styles_constants"
